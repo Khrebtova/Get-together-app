@@ -1,6 +1,6 @@
 import React , { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-//import { headers } from '../../Globals'
+import { headers } from '../../Globals'
 
 const Login = ({onLogin}) => {
     const navigate = useNavigate()
@@ -11,21 +11,21 @@ const Login = ({onLogin}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(username, "trying to login")
-        // fetch("/login", {
-        //     method: "POST",
-        //     headers,
-        //     body: JSON.stringify({ username, password }),
-        //   }).then((r) => {            
-        //     if (r.ok) {
-        //         r.json().then((user) => {
-        //             console.log(user.username, "logged in")
-        //             onLogin(user)
-        //             navigate('/')                    
-        //         });
-        //     } else {
-        //         r.json().then((err) => setErrors(err.errors));
-        //     }
-        //   });
+        fetch("/login", {
+            method: "POST",
+            headers,
+            body: JSON.stringify({ username, password }),
+          }).then((r) => {            
+            if (r.ok) {
+                r.json().then((user) => {
+                    console.log(user.username, "logged in")
+                    onLogin(user)
+                    navigate('/')                    
+                });
+            } else {
+                r.json().then((err) => setErrors(err.errors));
+            }
+          });
     }
 
     return (

@@ -1,6 +1,6 @@
 import React , { useState }from 'react'
 import { useNavigate } from 'react-router-dom'
-//import { headers } from '../../Globals'
+import { headers } from '../../Globals'
 
 const Signup = ({onLogin}) => {
     const navigate = useNavigate()
@@ -26,27 +26,27 @@ const Signup = ({onLogin}) => {
         setErrors([]);
         setIsLoading(true);
         console.log(newUser)
-        // fetch("/signup", {
-        //   method: "POST",
-        //   headers,
-        //   body: JSON.stringify({
-        //     username: newUser.username,
-        //     password: newUser.password,
-        //     password_confirmation: newUser.passwordConfirmation
-        //   }),
-        // }).then((r) => { 
-        //   setIsLoading(false);          
-        //   if (r.created) {
-        //     r.json().then((user) => {
-        //         console.log("account created")
-        //       navigate('/')
-        //       setNewUser(defaultData)
-        //       onLogin(user)
-        //     });
-        //   } else {
-        //     r.json().then((err) => setErrors(err.errors));
-        //   }
-        // });
+        fetch("/signup", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            username: newUser.username,
+            password: newUser.password,
+            password_confirmation: newUser.passwordConfirmation
+          }),
+        }).then((r) => { 
+          setIsLoading(false);          
+          if (r.ok) {
+            r.json().then((user) => {
+              console.log("account created")
+              navigate('/')
+              setNewUser(defaultData)
+              onLogin(user)
+            });
+          } else {
+            r.json().then((err) => setErrors(err.errors));
+          }
+        });
       }
 
   return (

@@ -9,13 +9,11 @@ const Logout = ({onLogout}) => {
         fetch('/logout', {
             method: "DELETE"
         })
-        .then((r) => {if (r.ok) {            
+        .then(() => {            
                 onLogout(null)
                 console.log("logged out")
                 navigate('/login')
-            }else{
-                console.log("error logging out")
-            }}
+            }
         )        
     }
 

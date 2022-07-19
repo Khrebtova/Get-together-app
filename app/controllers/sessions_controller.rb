@@ -13,7 +13,6 @@ class SessionsController < ApplicationController
 
     # DELETE /logout
     def destroy
-        byebug
         user = User.find_by(id: session[:user_id])
         if user
             session.delete(:user_id)
