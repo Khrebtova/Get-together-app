@@ -1,12 +1,12 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import Navbar from './components/Navigation/Navbar';
+import NavBar from './components/Navigation/NavBar';
 import Home from './components/Pages/Home';
 import Signup from './components/Authentication/Signup';
 import Login from './components/Authentication/Login';
 import Logout from './components/Authentication/Logout';
 import MyEvents from './components/Pages/MyEvents';
-import { backendUrl } from './Globals';
+
 import './App.css';
 import { useEffect, useState } from 'react';
 
@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     document.title = 'Get together';
-    fetch(backendUrl + "/me").then((r) => {
+    fetch("/me").then((r) => {
       if (r.ok) {
         r.json().then((data) => {
           setUser(data)
@@ -29,7 +29,7 @@ function App() {
   return (
     <div className="App">           
         <Router>
-          <Navbar />
+          <NavBar />
           <Routes>
             <Route path="/" element={<Home user={user}/>} />
             <Route path="/signup" element={<Signup onLogin={setUser}/>} />

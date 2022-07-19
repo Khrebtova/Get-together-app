@@ -1,6 +1,6 @@
 import React , { useState }from 'react'
 import { useNavigate } from 'react-router-dom'
-import { headers } from '../../Globals'
+//import { headers } from '../../Globals'
 
 const Signup = ({onLogin}) => {
     const navigate = useNavigate()
