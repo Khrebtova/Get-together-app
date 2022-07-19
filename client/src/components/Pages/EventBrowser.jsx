@@ -5,9 +5,7 @@ const EventBrowser = () => {
   return (
     <div>
         <h2>EventBrowser</h2>
-        <Event />
-        <Event />
-        <Event />
+       
     </div>
   )
 }
