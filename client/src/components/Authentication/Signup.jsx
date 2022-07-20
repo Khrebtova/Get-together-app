@@ -1,53 +1,57 @@
-import React , { useState }from 'react'
+import React , { useState, useContext }from 'react'
 import { useNavigate } from 'react-router-dom'
 import { headers } from '../../Globals'
+import {UserContext} from '../context/user'
 
-const Signup = ({onLogin}) => {
-    const navigate = useNavigate()
-    const [errors, setErrors] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+const Signup = () => {
+  const {user, setUser} = useContext(UserContext)
+  const navigate = useNavigate()
+  const [errors, setErrors] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-    const defaultData = {
-        "username": '',
-        "password": '',
-        "passwordConfirmation": ''        
-    }
-    const [newUser, setNewUser] = useState(defaultData)
-    
-    const handleChange = (e) => {
-        let key = e.target.id
-        let value = e.target.value
-        let formData = {...newUser, [key]: value}        
-        setNewUser(formData)
-    }
+  const defaultData = {
+      "username": '',
+      "password": '',
+      "passwordConfirmation": ''        
+  }
+  const [newUser, setNewUser] = useState(defaultData)
+  
+  const handleChange = (e) => {
+      let key = e.target.id
+      let value = e.target.value
+      let formData = {...newUser, [key]: value}        
+      setNewUser(formData)
+  }
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        setErrors([]);
-        setIsLoading(true);
-        console.log(newUser)
-        fetch("/signup", {
-          method: "POST",
-          headers,
-          body: JSON.stringify({
-            username: newUser.username,
-            password: newUser.password,
-            password_confirmation: newUser.passwordConfirmation
-          }),
-        }).then((r) => { 
-          setIsLoading(false);          
-          if (r.ok) {
-            r.json().then((user) => {
-              console.log("account created")
-              navigate('/')
-              setNewUser(defaultData)
-              onLogin(user)
-            });
-          } else {
-            r.json().then((err) => setErrors(err.errors));
-          }
-        });
-      }
+  function handleSubmit(e) {
+      e.preventDefault();
+      setErrors([]);
+      setIsLoading(true);
+      console.log(newUser)
+      fetch("/signup", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          username: newUser.username,
+          password: newUser.password,
+          password_confirmation: newUser.passwordConfirmation
+        }),
+      }).then((r) => { 
+        setIsLoading(false);          
+        if (r.ok) {
+          r.json().then((user) => {
+            console.log("account created")
+            navigate('/')
+            setNewUser(defaultData)
+            setUser(user)
+          });
+        } else {
+          r.json().then((err) => setErrors(err.errors));
+        }
+      });
+  }
+  
+  if (user) return <h2>You already logged in {user.username}!</h2>
 
   return (
     <form onSubmit={handleSubmit}>

@@ -1,8 +1,10 @@
-import React , { useState } from 'react'
+import React , { useState, useContext } from 'react'
+import {UserContext} from '../context/user'
 import { useNavigate } from 'react-router-dom'
 import { headers } from '../../Globals'
 
-const Login = ({onLogin}) => {
+const Login = () => {
+    const {user, setUser} = useContext(UserContext)
     const navigate = useNavigate()
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -19,7 +21,7 @@ const Login = ({onLogin}) => {
             if (r.ok) {
                 r.json().then((user) => {
                     console.log(user.username, "logged in")
-                    onLogin(user)
+                    setUser(user)
                     navigate('/')                    
                 });
             } else {
@@ -28,6 +30,8 @@ const Login = ({onLogin}) => {
           });
     }
 
+    if (user) return <h2>You already logged in {user.username}!</h2>
+   
     return (
         <div>
             <h2> Already have an account? Please log In</h2>
@@ -41,6 +45,7 @@ const Login = ({onLogin}) => {
             <button onClick={()=>navigate('/signup')}>Sign Up</button>
         </div>
   )
+    
 }
 
 export default Login

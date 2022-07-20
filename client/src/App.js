@@ -2,6 +2,7 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+import { UserProvider } from './components/context/user.jsx';
 import NavBar from './components/Navigation/NavBar';
 import Home from './components/Pages/Home';
 import Signup from './components/Authentication/Signup';
@@ -26,22 +27,26 @@ function App() {
     });
   }, []);
 
+
+
   console.log(user)
 
   return (
-    <div className="App">           
+    <div className="App"> 
+      <UserProvider>
         <Router>
           <NavBar />
           <Routes>
-            <Route path="/" element={<Home user={user}/>} />
+            <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup onLogin={setUser}/>} />
             <Route path="/login" element={<Login onLogin={setUser}/>} />
             <Route path="/logout" element={<Logout onLogout={setUser}/>} />
             <Route path="/myevents" element={<MyEvents user={user}/>} />
-            <Route path="/events" element ={<EventBrowser />} />
+            <Route path="/events" element ={<EventBrowser user={user}/>} />
             <Route path="/events/new" element={<NewEventForm user={user}/>} />
           </Routes>
         </Router>      
+      </UserProvider>          
     </div>
   );
 }

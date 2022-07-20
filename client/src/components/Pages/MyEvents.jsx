@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext} from 'react'
 import Event from '../elements/Event'
+import {UserContext} from '../context/user'
 
-const MyEvents = ({user}) => {
-  
+const MyEvents = () => {
+  const {user} = useContext(UserContext)
   const eventsHosting = user.hosting_events.map(event => <Event key={event.id} event={event} />)
   const eventsAttending = user.attending_events.map(event => <Event key={event.id} event={event} />)
   

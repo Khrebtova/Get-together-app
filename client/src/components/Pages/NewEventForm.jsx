@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { headers } from '../../Globals'
 import { useNavigate } from 'react-router-dom'
+import {UserContext} from '../context/user'
 
-const NewEventForm = ({user}) => {
-    
+const NewEventForm = () => {
+    const {user} = useContext(UserContext)
     const navigate = useNavigate()
 
     const defaultData = {
