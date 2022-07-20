@@ -1,10 +1,13 @@
 import React from 'react'
 import {headers } from '../../Globals'
-const Event = ({event, user}) => {
+
+const Event = ({event, user, onUpdateEvents}) => {
+  const hosting = event.host.id === user.id  
   
   const handleClickAttend = () => {
     console.log(user.username, "attending", event.name)
-    fetch('/participations', {
+    // fetch (`/participations/${event.id}/${user.id}`, {
+    fetch(`/events/${event.id}/attend/${user.id}`, {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -13,11 +16,20 @@ const Event = ({event, user}) => {
       })
     })
     .then(r => r.json())
-    .then(data => console.log(data))
-    .catch(err => console.log(err.errors))
-    
-    // fetch(`/events/${event.id}/attend`, {})
+    .then(data => onUpdateEvents(data))
+    .catch(err => console.log(err.errors))    
   }
+
+  const handleClickUnattend = () => {
+    console.log(user.username, "can't go to ", event.name)
+    fetch(`/events/${event.id}/unattend/${user.id}`, {
+      method: 'DELETE'
+    })
+    .then(r => r.json())
+    .then(data => onUpdateEvents(data))
+    .catch(err => console.log(err.errors))
+  }
+
   const myEvent = () =>{
     return (
       <>
@@ -26,10 +38,14 @@ const Event = ({event, user}) => {
         <p>Location: {event.location}</p>
         <p>Date: {event.date}</p>      
         <p>People attending: {event.guest_count}</p>
+        <button >Edit</button>
+        <button>Delete </button>
       </>
     )
   }
+
   const browseEvent = () =>{
+    const attending  = event.guests.map(guest => guest.id).includes(user.id)
     return(
       <>
         <h4>{event.name}</h4>
@@ -38,14 +54,14 @@ const Event = ({event, user}) => {
         <p>Location: {event.location}</p>
         <p>Date: {event.date}</p>      
         <p>People attending: {event.guest_count}</p>
-        {event.host.id === user.id ? null : <button onClick={handleClickAttend}>Attend Event</button>}
+        {attending ? <button onClick={handleClickUnattend}>Can't go, sorry</button> : <button onClick={handleClickAttend}>Attend Event</button>}
       </>
     )
-
   }
+
   return (
     <div style={{border: "solid", borderColor: "green"}}>
-      {event.host ? browseEvent() : myEvent()}
+      {hosting ?  myEvent() : browseEvent()}
     </div>
   )
 }

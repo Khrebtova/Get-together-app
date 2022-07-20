@@ -7,8 +7,8 @@ const UserContext = React.createContext()
 const UserProvider = ({children}) => {
     const [user, setUser] = React.useState(null)  
     // const [events, setEvents] = React.useState([])
-    // const [hostEvents, setHostEvents] = React.useState([])
-    // const [guestEvents, setGuestEvents] = React.useState([])    
+    const [hostingEvents, setHostingEvents] = React.useState([])
+    const [attendingEvents, setAttendingEvents] = React.useState([])    
     // const [categories, setCategories] = React.useState([])
 
     useEffect(() => {
@@ -17,12 +17,14 @@ const UserProvider = ({children}) => {
           if (r.ok) {
             r.json().then((data) => {
               setUser(data)
+              setHostingEvents(data.hosting_events)
+              setAttendingEvents(data.attending_events)
             });
           }
         });
       }, []);
    
-   return <UserContext.Provider value = {{user, setUser}}> {children} </UserContext.Provider>
+   return <UserContext.Provider value = {{user, setUser, hostingEvents, setHostingEvents, attendingEvents, setAttendingEvents}}> {children} </UserContext.Provider>
 }
 
 export {UserContext, UserProvider}

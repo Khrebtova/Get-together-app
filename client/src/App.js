@@ -14,23 +14,43 @@ import NewEventForm from './components/Pages/NewEventForm';
 
 
 function App() {
-  const [user, setUser] = useState(null);
-
+  const [events, setEvents] = useState([])
+  const [categories, setCategories] = useState([])
+    
   useEffect(() => {
-    document.title = 'Get together';
-    fetch("/me").then((r) => {
-      if (r.ok) {
-        r.json().then((data) => {
-          setUser(data)
-        });
+    fetch('/events')
+    .then(r=>r.json())
+    .then(events => setEvents(events))
+
+    fetch('/categories')
+    .then(r=>r.json())
+    .then(categories => setCategories(categories))
+  }, [])
+
+  const updateEvents = (updatedEvent) => {
+    const newList = events.map(event => {
+      if (event.id === updatedEvent.id) {
+        return updatedEvent
+      } else {
+        return event
       }
-    });
-  }, []);
+    })
+    setEvents(newList)
+  }
 
+  const addEvent = (newEvent) => {
+    setEvents([...events, newEvent])
+  }
 
+  const deleteEvent = (id) => {
+    const newList = events.filter(event => event.id !== id)
+    setEvents(newList)
+  }
 
-  console.log(user)
-
+  const addCategory = (newCategory) => {
+    setCategories([...categories, newCategory])
+  }
+  
   return (
     <div className="App"> 
       <UserProvider>
@@ -38,12 +58,12 @@ function App() {
           <NavBar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<Signup onLogin={setUser}/>} />
-            <Route path="/login" element={<Login onLogin={setUser}/>} />
-            <Route path="/logout" element={<Logout onLogout={setUser}/>} />
-            <Route path="/myevents" element={<MyEvents user={user}/>} />
-            <Route path="/events" element ={<EventBrowser user={user}/>} />
-            <Route path="/events/new" element={<NewEventForm user={user}/>} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/myevents" element={<MyEvents events={events} onDeleteEvent={deleteEvent} onUpdateEvents={updateEvents}/>} />
+            <Route path="/events" element ={<EventBrowser events={events} onUpdateEvents={updateEvents} categories={categories}/>} /> 
+            <Route path="/events/new" element={<NewEventForm categories={categories} onAddEvent={addEvent} onAddCategory={addCategory}/>} /> 
           </Routes>
         </Router>      
       </UserProvider>          

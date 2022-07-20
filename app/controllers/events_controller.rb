@@ -27,6 +27,22 @@ class EventsController < ApplicationController
     end
   end
 
+  # POST /events/event_id/attend/user_id
+  def attend
+    @event = Event.find_by(id: params[:id])
+    @event.participations.create(user_id: params[:user_id])
+    render json: @event, status: :created
+   
+  end
+
+  # delete /event_id/1/unattend/user_id
+  def unattend
+    @event = Event.find_by(id: params[:id])
+    participation = @event.participations.find_by(user_id: params[:user_id])
+    participation.destroy
+    render json: @event
+  end
+
   # PATCH/PUT /events/1
   def update
     if @event.update(event_params)
