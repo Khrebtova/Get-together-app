@@ -1,8 +1,11 @@
 import React from 'react'
 
-const EventPage = () => {
+const EventPage = ({event, onSetSelectedEvent}) => {
   return (
-    <div>EventPage</div>
+    <div style={{border: 'solid red'}}>
+      {event.name} details page
+      <button onClick={()=>onSetSelectedEvent(null)}>Close</button>
+    </div>
   )
 }
 

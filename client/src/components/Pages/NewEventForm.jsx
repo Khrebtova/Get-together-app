@@ -1,18 +1,24 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { headers } from '../../Globals'
 import { useNavigate } from 'react-router-dom'
-import {UserContext} from '../context/user'
+import { UserContext } from '../context/user'
 
-const NewEventForm = () => {
+const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent}) => {
     const {user} = useContext(UserContext)
     const navigate = useNavigate()
+    const [isNewCategory, setIsNewCategory] = useState(false)
+   
+    useEffect(() => {
+        onSetSelectedEvent(null)
+      } , [])
 
     const defaultData = {
         name: '',
         description: '',
         location: '',
         date: '',
-        category: ''
+        categoryId: '',
+        newCategory: ''
     }
     const [newEvent, setNewEvent] = useState(defaultData)
     const [errors, setErrors] = useState([]);
@@ -25,19 +31,42 @@ const NewEventForm = () => {
         })
     }
 
+    const handleNewCategoryEnter = (e) => {
+        if (e.target.value === '') {
+            setIsNewCategory(false)
+            
+        } else {
+            setIsNewCategory(true)
+            setNewEvent({
+                ...newEvent,
+                newCategory: e.target.value, 
+                categoryId: ''
+            })
+        }}
+
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log("submitting", {newEvent})
         setIsLoading(true)
-        const strongParams = {
-            user_id: user.id,
-            name: newEvent.name,
-            description: newEvent.description,
-            location: newEvent.location,
-            date: newEvent.date,
-            category_attributes: {name: newEvent.category}
-        }
-        
+        let strongParams;
+        if (isNewCategory) {
+            strongParams = {
+                user_id: user.id,
+                name: newEvent.name,
+                description: newEvent.description,
+                location: newEvent.location,
+                date: newEvent.date,
+                category_attributes: {name: newEvent.newCategory}
+            }} else {
+            strongParams = {
+                user_id: user.id,
+                category_id: newEvent.categoryId,
+                name: newEvent.name,
+                description: newEvent.description,
+                location: newEvent.location,
+                date: newEvent.date,
+            }}        
+        console.log(strongParams)
         fetch('/events', {
             method: 'POST',
             headers,
@@ -46,8 +75,10 @@ const NewEventForm = () => {
         .then(res => {
             setIsLoading(false)
             if (res.ok) {
-                res.json().then(event => {
-                    console.log("created ", event.name, 'with id: ', event.id)
+                res.json().then(event => {                    
+                    onAddEvent(event)
+                    console.log("event added", event)
+                    onAddCategory(event.category)
                     navigate('/myevents')
                 })
             }else{
@@ -57,12 +88,17 @@ const NewEventForm = () => {
 
   return (
     <div style={{display: "flex", flexDirection: "column", justifyContent: "space-around"}}>
-        <h2>New Event Form</h2>
+        <h2>{user.username}, create New Event here: </h2>
         <form onSubmit={handleSubmit} style={{display: "flex", flexDirection: "column", justifyContent: "space-around"}}>
             <label htmlFor="name">Name: </label>
             <input type="text" name="name" id="name" placeholder='enter name here' onChange={handleChange}/>
-            <label htmlFor="category">Category: </label>
-            <input type="text" name="category" id="category" placeholder='enter new category here' onChange={handleChange}/>
+            <label htmlFor="categoryId">Choose category: </label>
+            <select name="categoryId" id="categoryId" onChange={handleChange} disabled={isNewCategory}>
+                <option value="">Choose category</option>
+                {categories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)}
+            </select>
+            <label htmlFor="newCategory">Or enter new category: </label>
+            <input type="text" name="newCategory" id="newCategory" placeholder='enter new category here' onChange={handleNewCategoryEnter}/>
             <label htmlFor="description">Description: </label>
             <input type="text" name="description" id="description" placeholder='enter description here' onChange={handleChange}/>
             <label htmlFor="date">Date: </label>

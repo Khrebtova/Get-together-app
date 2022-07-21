@@ -1,7 +1,8 @@
 import React from 'react'
 import {headers } from '../../Globals'
 
-const Event = ({event, user, onUpdateEvents}) => {
+const Event = ({event, user, onUpdateEvents, onSetSelectedEvent, onDeleteEvent}) => {
+  
   const hosting = event.host.id === user.id  
   
   const handleClickAttend = () => {
@@ -34,12 +35,13 @@ const Event = ({event, user, onUpdateEvents}) => {
     return (
       <>
         <h4>{event.name}</h4>      
-        <p>Category: {event.category.name}</p>
-        <p>Location: {event.location}</p>
+        {/* <p>Category: {event.category.name}</p> */}
+        {/* <p>Location: {event.location}</p> */}
         <p>Date: {event.date}</p>      
         <p>People attending: {event.guest_count}</p>
+        
         <button >Edit</button>
-        <button>Delete </button>
+        <button onClick = {()=>onDeleteEvent(event.id)}>Delete </button>
       </>
     )
   }
@@ -47,15 +49,16 @@ const Event = ({event, user, onUpdateEvents}) => {
   const browseEvent = () =>{
     const attending  = event.guests.map(guest => guest.id).includes(user.id)
     return(
-      <>
+      < div onClick={()=>onSetSelectedEvent(event)}>
         <h4>{event.name}</h4>
         {event.host.id === user.id ? <p>You are the host of this event</p> : <p>Host: {event.host.username}</p>}
-        <p>Category: {event.category.name}</p>
-        <p>Location: {event.location}</p>
+        {/* <p>Category: {event.category.name}</p> */}
+        {/* <p>Location: {event.location}</p> */}
         <p>Date: {event.date}</p>      
-        <p>People attending: {event.guest_count}</p>
+        {attending ? <p>People attending: You + {event.guest_count - 1} </p> : <p>People attending: {event.guest_count}</p>}
+        
         {attending ? <button onClick={handleClickUnattend}>Can't go, sorry</button> : <button onClick={handleClickAttend}>Attend Event</button>}
-      </>
+      </div>
     )
   }
 

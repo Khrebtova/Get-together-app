@@ -1,11 +1,15 @@
-import React , {useContext}from 'react'
+import React , {useContext, useEffect}from 'react'
 import { useNavigate } from 'react-router-dom'
 import {UserContext} from '../context/user'
 
-const Logout = () => {
+const Logout = ({onSetSelectedEvent}) => {
     const {user, setUser} = useContext(UserContext)
     const navigate = useNavigate();
-
+    
+    useEffect(() => {
+        onSetSelectedEvent(null)
+    } , [])
+    
     const handleLogout = () => {
         console.log("started logging out")
         fetch('/logout', {
