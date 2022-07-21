@@ -7,7 +7,7 @@ const EventBrowser = ({events, onUpdateEvents, categories, onSetSelectedEvent}) 
   
   useEffect(() => {
     onSetSelectedEvent(null)
-  } , []) 
+  } , [onSetSelectedEvent]) 
 
   const eventList = events.filter(event => event.host.id !== user.id).map(event => <Event key={event.id} event={event} user={user} onUpdateEvents={onUpdateEvents} onSetSelectedEvent={onSetSelectedEvent}/>)
   return (

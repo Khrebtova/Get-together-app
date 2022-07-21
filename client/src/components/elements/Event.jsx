@@ -3,7 +3,7 @@ import {headers } from '../../Globals'
 
 const Event = ({event, user, onUpdateEvents, onSetSelectedEvent, onDeleteEvent}) => {
   
-  const hosting = event.host.id === user.id  
+  const attending  = event.guests.map(guest => guest.id).includes(user.id)
   
   const handleClickAttend = () => {
     console.log(user.username, "attending", event.name)
@@ -30,41 +30,31 @@ const Event = ({event, user, onUpdateEvents, onSetSelectedEvent, onDeleteEvent})
     .then(data => onUpdateEvents(data))
     .catch(err => console.log(err.errors))
   }
+  
 
-  const myEvent = () =>{
-    return (
-      <>
-        <h4>{event.name}</h4>      
-        {/* <p>Category: {event.category.name}</p> */}
-        {/* <p>Location: {event.location}</p> */}
-        <p>Date: {event.date}</p>      
-        <p>People attending: {event.guest_count}</p>
+  // const browseEvent = () =>{
+  //   return(
+  //     < div onClick={()=>onSetSelectedEvent(event)}>
+  //       <h4>{event.name}</h4>
+  //       {event.host.id === user.id ? <p>You are the host of this event</p> : <p>Host: {event.host.username}</p>}      
+  //       <p>Date: {event.date}</p>      
+  //       {attending ? <p>People attending: You + {event.guest_count - 1} </p> : <p>People attending: {event.guest_count}</p>}
         
-        <button >Edit</button>
-        <button onClick = {()=>onDeleteEvent(event.id)}>Delete </button>
-      </>
-    )
-  }
+  //       {attending ? <button onClick={handleClickUnattend}>Can't go, sorry</button> : <button onClick={handleClickAttend}>Attend Event</button>}
+  //     </div>
+  //   )
+  // }
 
-  const browseEvent = () =>{
-    const attending  = event.guests.map(guest => guest.id).includes(user.id)
-    return(
-      < div onClick={()=>onSetSelectedEvent(event)}>
-        <h4>{event.name}</h4>
-        {event.host.id === user.id ? <p>You are the host of this event</p> : <p>Host: {event.host.username}</p>}
-        {/* <p>Category: {event.category.name}</p> */}
-        {/* <p>Location: {event.location}</p> */}
+  return (
+    <div style={{border: "solid", borderColor: "green"}}>
+      < div >
+        <h4 onClick={()=>onSetSelectedEvent(event)}>{event.name}</h4>
+        {event.host.id === user.id ? <p>You are the host of this event</p> : <p>Host: {event.host.username}</p>}      
         <p>Date: {event.date}</p>      
         {attending ? <p>People attending: You + {event.guest_count - 1} </p> : <p>People attending: {event.guest_count}</p>}
         
         {attending ? <button onClick={handleClickUnattend}>Can't go, sorry</button> : <button onClick={handleClickAttend}>Attend Event</button>}
       </div>
-    )
-  }
-
-  return (
-    <div style={{border: "solid", borderColor: "green"}}>
-      {hosting ?  myEvent() : browseEvent()}
     </div>
   )
 }

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :comments, only: [:create, :destroy, :last_five]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :participations, only: [:create]
   resources :events
@@ -9,6 +10,8 @@ Rails.application.routes.draw do
   delete '/events/:id/unattend/:user_id', to: 'events#unattend'
 
   delete '/participations/:event_id/:user_id', to: 'participations#destroy'
+
+  get '/comments/last_five', to: 'comments#last_five'
 
   post '/signup', to: 'users#create'
   get '/me', to: 'users#show'

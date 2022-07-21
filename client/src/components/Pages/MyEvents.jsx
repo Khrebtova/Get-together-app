@@ -8,13 +8,27 @@ const MyEvents = ({events, onUpdateEvents, onSetSelectedEvent, onDeleteEvent}) =
   
   useEffect(() => {
     onSetSelectedEvent(null)
-  } , [])
+  } , [onSetSelectedEvent])
 
   const hostingEvents = events.filter(event => event.host.id === user.id)
   const attendingEvents = events.filter(event => event.guests.map(guest=>guest.id).includes(user.id))
 
-  const listEventsHosting = hostingEvents.map(event => <Event key={event.id} event={event} user={user} onUpdateEvents={onUpdateEvents} onSetSelectedEvent={onSetSelectedEvent} onDeleteEvent={onDeleteEvent}/>)
-  const listEventsAttending = attendingEvents.map(event => <Event key={event.id} event={event} user={user} onUpdateEvents={onUpdateEvents} onSetSelectedEvent={onSetSelectedEvent}/>)
+  const listEventsHosting = hostingEvents.map(event => <MyEvent 
+    key={event.id} 
+    event={event} 
+    user={user} 
+    onUpdateEvents={onUpdateEvents} 
+    onSetSelectedEvent={onSetSelectedEvent} 
+    onDeleteEvent={onDeleteEvent}
+    />)
+
+  const listEventsAttending = attendingEvents.map(event => <Event 
+    key={event.id} 
+    event={event} 
+    user={user} 
+    onUpdateEvents={onUpdateEvents} 
+    onSetSelectedEvent={onSetSelectedEvent}
+    />)
   
   return (
     <div>

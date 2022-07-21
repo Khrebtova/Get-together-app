@@ -15,8 +15,7 @@ import EventPage from './components/Pages/EventPage';
 
 function App() {
   const [events, setEvents] = useState([])
-  const [categories, setCategories] = useState([])
-  const [showEventDetails, setShowEventDetails] = useState(false)
+  const [categories, setCategories] = useState([])  
   const [selectedEvent, setSelectedEvent] = useState(null)
 
   useEffect(() => {

@@ -10,7 +10,7 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
    
     useEffect(() => {
         onSetSelectedEvent(null)
-      } , [])
+      } , [onSetSelectedEvent])
 
     const defaultData = {
         name: '',
