@@ -65,7 +65,7 @@ function App() {
           <NavBar />
           {selectedEvent ? <EventPage event={selectedEvent} onSetSelectedEvent={setSelectedEvent} onDeleteEvent={deleteEvent}/> : null}
           <Routes>
-            <Route path="/" element={<Home onSetSelectedEvent={setSelectedEvent} />} />
+            <Route path="/" element={<Home onSetSelectedEvent={setSelectedEvent} events={events}/>} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout onSetSelectedEvent={setSelectedEvent} />} />
