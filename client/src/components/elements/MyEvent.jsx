@@ -7,7 +7,7 @@ const MyEvent = ({event, user, onUpdateEvents, onDeleteEvent, onSetSelectedEvent
         <p>Date: {event.date}</p>      
         <p>People attending: {event.guest_count}</p>
         {event.comments ? <p> Comments: {event.comments.length} </p> :<p> No comments yet</p>}
-        <button >Edit</button>
+        
         <button onClick = {()=>onDeleteEvent(event.id)}>Delete </button>
     </div>
   )

@@ -12,12 +12,13 @@ import MyEvents from './components/Pages/MyEvents';
 import EventBrowser from './components/Pages/EventBrowser';
 import NewEventForm from './components/Pages/NewEventForm';
 import EventPage from './components/Pages/EventPage';
+import UpdateEventForm from './components/elements/UpdateEventForm.jsx';
 
 function App() {
   const [events, setEvents] = useState([])
   const [categories, setCategories] = useState([])  
   const [selectedEvent, setSelectedEvent] = useState(null)
-
+  const [editEvent, setEditEvent] = useState(false)
 
   useEffect(() => {
     fetch('/events')
@@ -64,7 +65,8 @@ function App() {
       <UserProvider>
         <Router>
           <NavBar />
-          {selectedEvent ? <EventPage event={selectedEvent} onSetSelectedEvent={setSelectedEvent} onDeleteEvent={deleteEvent} onUpdateEvents={updateEvents}/> : null}
+          {editEvent ? <UpdateEventForm event={selectedEvent} categories={categories} onAddCategory={addCategory} onUpdateEvents={updateEvents} setEditEvent={setEditEvent} onSetSelectedEvent={setSelectedEvent}/> : null}
+          {selectedEvent && !editEvent ? <EventPage event={selectedEvent} setEditEvent={setEditEvent} onSetSelectedEvent={setSelectedEvent} onDeleteEvent={deleteEvent} onUpdateEvents={updateEvents}/> : null}
           <Routes>
             <Route path="/" element={<Home onSetSelectedEvent={setSelectedEvent} events={events}/>} />
             <Route path="/signup" element={<Signup />} />

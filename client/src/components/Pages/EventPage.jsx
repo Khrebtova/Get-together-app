@@ -1,15 +1,16 @@
 import React, { useState, useContext }  from 'react'
 import {UserContext} from '../context/user'
 import { headers } from '../../Globals'
+import UpdateEventForm from '../elements/UpdateEventForm'
 
-const EventPage = ({event, onSetSelectedEvent, onUpdateEvents}) => {
+const EventPage = ({event, onSetSelectedEvent, onUpdateEvents, onDeleteEvent, setEditEvent}) => {
   const {user} = useContext(UserContext)   
   const isHost = event.host.id === user.id
-  const attending  = event.guests.map(guest => guest.id).includes(user.id)
-  
+  const isAttending  = event.guests.map(guest => guest.id).includes(user.id)
+ 
   const commentList = event.comments
   const [comment, setComment] = useState('')
-
+ 
   const handleClickAttend = () => {    
     // fetch (`/participations/${event.id}/${user.id}`, {
     fetch(`/events/${event.id}/attend/${user.id}`, {
@@ -83,15 +84,20 @@ const EventPage = ({event, onSetSelectedEvent, onUpdateEvents}) => {
     }
   }
 
+  const handleClickDelete = () => {
+    onDeleteEvent(event.id)
+    onSetSelectedEvent(null)
+  }
+
   const hostEventPage = () => {
     return(
-      <div style={{border: 'solid blue'}}>
-        {event.name} details page
-        <p>description: {event.description}</p>
-        <p>host: {event.host.username}</p>
-        <p>location: {event.location}</p>
-        <p>date: {event.date}</p>
-        <p>Who is going? : {event.guests.map(guest=> <span  key={guest.id}>{guest.username} </span>)}</p>
+      <div style={{border: 'solid blue'}}>        
+        <h3 >{event.name}</h3>
+        <p >description: {event.description}</p>
+        <p>host: You </p>
+        <p >location: {event.location}</p>
+        <p >date: {event.date}</p>
+        <p >Who is going? : {event.guests.map(guest=> <span  key={guest.id}>{guest.username} </span>)}</p>
         <p>Comments:</p>
         <ul>
           {renderComments()}
@@ -101,8 +107,8 @@ const EventPage = ({event, onSetSelectedEvent, onUpdateEvents}) => {
           </form>
         </ul>
         <button onClick={()=>onSetSelectedEvent(null)}>Close</button>
-        <button>Edit</button>
-        <button>Delete Event</button>
+        <button onClick={()=> setEditEvent(true)}>Edit</button>
+        <button onClick={handleClickDelete}>Delete Event</button>
       </div>
     )
   }
@@ -125,7 +131,7 @@ const EventPage = ({event, onSetSelectedEvent, onUpdateEvents}) => {
           </form>
         </ul>
         <button onClick={()=>onSetSelectedEvent(null)}>Close</button>
-        {attending ? <button onClick={handleClickUnattend}>Can't go, sorry</button> : <button onClick={handleClickAttend}>Attend Event</button>}
+        {isAttending ? <button onClick={handleClickUnattend}>Can't go, sorry</button> : <button onClick={handleClickAttend}>Attend Event</button>}
       </div>
     )
   }

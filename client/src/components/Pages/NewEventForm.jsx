@@ -33,8 +33,7 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
 
     const handleNewCategoryEnter = (e) => {
         if (e.target.value === '') {
-            setIsNewCategory(false)
-            
+            setIsNewCategory(false)            
         } else {
             setIsNewCategory(true)
             setNewEvent({
@@ -42,7 +41,8 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
                 newCategory: e.target.value, 
                 categoryId: ''
             })
-        }}
+        }
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
