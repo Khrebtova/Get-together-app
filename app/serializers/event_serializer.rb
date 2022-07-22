@@ -3,7 +3,7 @@ class EventSerializer < ActiveModel::Serializer
   # has_one :category
   has_one :host
   has_many :guests
-  has_many :comments
+  has_many :comments, serializer: EventCommentSerializer
   
   def guest_count
     object.guests.count

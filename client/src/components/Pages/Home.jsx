@@ -12,8 +12,13 @@ const Home = ({onSetSelectedEvent, events}) => {
     .then(comments => setLastComments(comments))
   } , [onSetSelectedEvent])
 
+  const handleSelectEvent = (id) => {    
+    const event = events.find(event => event.id === id)
+    onSetSelectedEvent(event)
+  }
+
   const renderLastComments =()=> {
-    return lastComments.map(comment =><p key={comment.id} onClick={()=>onSetSelectedEvent(comment.event)}>
+    return lastComments.map(comment =><p key={comment.id} onClick={()=>handleSelectEvent(comment.event.id)}>
       {comment.user.username} said on '{comment.event.name}' : "{comment.text}"</p>
     )}
   

@@ -18,6 +18,7 @@ function App() {
   const [categories, setCategories] = useState([])  
   const [selectedEvent, setSelectedEvent] = useState(null)
 
+
   useEffect(() => {
     fetch('/events')
     .then(r=>r.json())
@@ -63,7 +64,7 @@ function App() {
       <UserProvider>
         <Router>
           <NavBar />
-          {selectedEvent ? <EventPage event={selectedEvent} onSetSelectedEvent={setSelectedEvent} onDeleteEvent={deleteEvent}/> : null}
+          {selectedEvent ? <EventPage event={selectedEvent} onSetSelectedEvent={setSelectedEvent} onDeleteEvent={deleteEvent} onUpdateEvents={updateEvents}/> : null}
           <Routes>
             <Route path="/" element={<Home onSetSelectedEvent={setSelectedEvent} events={events}/>} />
             <Route path="/signup" element={<Signup />} />

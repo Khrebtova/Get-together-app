@@ -5,8 +5,7 @@ const Event = ({event, user, onUpdateEvents, onSetSelectedEvent, onDeleteEvent})
   
   const attending  = event.guests.map(guest => guest.id).includes(user.id)
   
-  const handleClickAttend = () => {
-    console.log(user.username, "attending", event.name)
+  const handleClickAttend = () => {    
     // fetch (`/participations/${event.id}/${user.id}`, {
     fetch(`/events/${event.id}/attend/${user.id}`, {
       method: 'POST',
@@ -38,7 +37,7 @@ const Event = ({event, user, onUpdateEvents, onSetSelectedEvent, onDeleteEvent})
         {event.host.id === user.id ? <p>You are the host of this event</p> : <p>Host: {event.host.username}</p>}      
         <p>Date: {event.date}</p>      
         {attending ? <p>People attending: You + {event.guest_count - 1} </p> : <p>People attending: {event.guest_count}</p>}
-        
+        {event.comments ? <p> Comments: {event.comments.length} </p> :<p> No comments yet</p>}
         {attending ? <button onClick={handleClickUnattend}>Can't go, sorry</button> : <button onClick={handleClickAttend}>Attend Event</button>}
       </div>
     </div>

@@ -21,9 +21,9 @@ class CommentsController < ApplicationController
   # POST /comments
   def create
     @comment = Comment.create(comment_params)
-
     if @comment.valid?
-      render json: @comment, status: :created
+      @event = Event.find_by(id: @comment.event_id)
+      render json: @event, status: :created
     else
       render json: {errors: @comment.errors.full_messages}, status: :unprocessable_entity
     end
@@ -40,7 +40,9 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
+    @event = Event.find_by(id: @comment.event_id)
     @comment.destroy
+    render json: @event, status: :ok
   end
 
   private
