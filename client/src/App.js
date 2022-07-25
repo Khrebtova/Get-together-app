@@ -62,7 +62,7 @@ function App() {
   
   return (
     <div className="App"> 
-      <UserProvider>
+      {/* <UserProvider> */}
         <Router>
           <NavBar />
           {editEvent ? <UpdateEventForm event={selectedEvent} categories={categories} onAddCategory={addCategory} onUpdateEvents={updateEvents} setEditEvent={setEditEvent} onSetSelectedEvent={setSelectedEvent}/> : null}
@@ -77,7 +77,7 @@ function App() {
             <Route path="/events/new" element={<NewEventForm categories={categories} onAddEvent={addEvent} onAddCategory={addCategory} onSetSelectedEvent={setSelectedEvent}/>} /> 
           </Routes>
         </Router>      
-      </UserProvider>          
+      {/* </UserProvider>           */}
     </div>
   );
 }
