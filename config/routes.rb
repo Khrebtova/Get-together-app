@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  resources :comments, only: [:create, :destroy, :last_five]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  resources :participations, only: [:create]
-  resources :events
   resources :users, only: [:create, :show, :index]
-  resources :categories, only: [:index, :show, :create]
+  resources :categories, only: [:index, :create]
+  resources :events
+  resources :comments, only: [:create, :destroy, :last_five]
+  resources :participations, only: [:create, :destroy]
   
   post '/events/:id/attend/:user_id', to: 'events#attend'
   delete '/events/:id/unattend/:user_id', to: 'events#unattend'

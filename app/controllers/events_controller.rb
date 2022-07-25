@@ -1,6 +1,8 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: %i[ show update destroy ]
+  before_action :authorize
 
+  before_action :set_event, only: %i[ show update destroy attend unattend ]
+  
   # GET /events
   def index
     @events = Event.all
@@ -19,7 +21,6 @@ class EventsController < ApplicationController
   # POST /events
   def create
     @event = Event.create(event_params)
-
     if @event.valid?
       render json: @event, status: :created, location: @event
     else
@@ -28,16 +29,13 @@ class EventsController < ApplicationController
   end
 
   # POST /events/event_id/attend/user_id
-  def attend
-    @event = Event.find_by(id: params[:id])
+  def attend    
     @event.participations.create(user_id: params[:user_id])
-    render json: @event, status: :created
-   
+    render json: @event, status: :created   
   end
 
   # delete /event_id/1/unattend/user_id
   def unattend
-    @event = Event.find_by(id: params[:id])
     participation = @event.participations.find_by(user_id: params[:user_id])
     participation.destroy
     render json: @event
@@ -70,5 +68,10 @@ class EventsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def event_params
       params.require(:event).permit(:name, :description, :location, :date, :category_id, :user_id, category_attributes: [ :name ])
+    end
+
+    # authorize the user
+    def authorize
+      render json: {errors: ["Unauthorized"]}, status: :unauthorized unless session.include? :user_id
     end
 end
