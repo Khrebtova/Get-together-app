@@ -10,15 +10,13 @@ const Logout = ({onSetSelectedEvent}) => {
         onSetSelectedEvent(null)
     } , [])
     
-    const handleLogout = () => {
-        console.log("started logging out")
+    const handleLogout = () => {        
         fetch('/logout', {
             method: "DELETE"
         })
         .then(() => {            
-                setUser(null)
-                console.log("logged out")
-                navigate('/login')
+            setUser(null)                
+            navigate('/login')
             }
         )        
     }

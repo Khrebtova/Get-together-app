@@ -12,11 +12,10 @@ const UserProvider = ({children}) => {
         fetch("/me").then((r) => {
           if (r.ok) {
             r.json().then((data) => {
-              setUser(data) 
-              console.log(data.username)            
+              setUser(data)                       
             });
           }else{
-            console.log("user load error")
+            console.log("user is not loggedin")
           }
         });
       }, []);

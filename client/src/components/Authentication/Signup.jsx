@@ -26,8 +26,8 @@ const Signup = () => {
   function handleSubmit(e) {
       e.preventDefault();
       setErrors([]);
-      setIsLoading(true);
-      console.log(newUser)
+      setIsLoading(true);      
+      
       fetch("/signup", {
         method: "POST",
         headers,

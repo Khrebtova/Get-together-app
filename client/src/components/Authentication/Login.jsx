@@ -11,16 +11,14 @@ const Login = () => {
     const [errors, setErrors] = useState([]);
         
     const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(username, "trying to login")
+        e.preventDefault();        
         fetch("/login", {
             method: "POST",
             headers,
             body: JSON.stringify({ username, password }),
           }).then((r) => {            
             if (r.ok) {
-                r.json().then((user) => {
-                    console.log(user.username, "logged in")
+                r.json().then((user) => {                    
                     setUser(user)
                     navigate('/')                    
                 });
