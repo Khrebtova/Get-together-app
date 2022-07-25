@@ -1,7 +1,6 @@
 import React, { useState, useContext }  from 'react'
 import {UserContext} from '../context/user'
 import { headers } from '../../Globals'
-import UpdateEventForm from '../elements/UpdateEventForm'
 
 const EventPage = ({event, onSetSelectedEvent, onUpdateEvents, onDeleteEvent, setEditEvent}) => {
   const {user} = useContext(UserContext)   

@@ -53,10 +53,10 @@ function App() {
   const addCategory = (newCategory) => {
     const categoryExist = categories.filter(category => category.id === newCategory.id)
     if (categoryExist){
+      console.log('category already exists')
+    } else {
       setCategories([...categories, newCategory])
       console.log('added category')
-    } else {
-      console.log('category already exists')
     }
   }
   
