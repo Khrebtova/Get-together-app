@@ -90,7 +90,7 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
    
     return (   
         <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 10, ml: 20, mr: 20}}>
-            <Typography variant="h6" mb={2} mt={2}>
+            <Typography variant="h3" mb={2} mt={2} sx={{color: 'primary'}}>
                 Create New Event here: 
             </Typography>
 

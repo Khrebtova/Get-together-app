@@ -1,6 +1,6 @@
 import React , { useState } from 'react'
-
 import { headers } from '../../Globals'
+import {Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, Typography, Divider } from '@mui/material'
 
 const UpdateEventForm = ({event, categories, onUpdateEvents, onSetSelectedEvent, setEditEvent, onAddCategory}) => {
     const [errors, setErrors] = useState([]);
@@ -18,10 +18,7 @@ const UpdateEventForm = ({event, categories, onUpdateEvents, onSetSelectedEvent,
     
 
     const handleChange = (e) => {
-        setEditedEvent({
-            ...editedEvent,
-            [e.target.name]: e.target.value
-        })
+        setEditedEvent({...editedEvent, [e.target.name]: e.target.value})
     }
 
     const handleNewCategoryEnter = (e) => {
@@ -79,29 +76,46 @@ const UpdateEventForm = ({event, categories, onUpdateEvents, onSetSelectedEvent,
 
 
   return (
-    <div style={{display: "flex", flexDirection: "column", justifyContent: "space-around"}}>
-        <h4>Edit Event</h4>
-        <button onClick={()=>setEditEvent(false)}>CANCEL</button>
-        {errors ? errors.map((err) => (<p style={{color: 'red'}} key={err}>{err}</p>)) : null}
-        <form onSubmit={handleSubmit} style={{display: "flex", flexDirection: "column", justifyContent: "space-around"}}>
-            <label htmlFor="name">Name: </label>
-            <input type="text" name="name" id="name" placeholder='enter name here' onChange={handleChange} value={editedEvent.name}/>
-            <label htmlFor="categoryId">Choose category: </label>
-            <select name="categoryId" id="categoryId" onChange={handleChange} disabled={isNewCategory} value={editedEvent.category_id}>
-                <option value="">Choose category</option>
-                {categories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)}
-            </select>
-            <label htmlFor="newCategory">Or enter new category: </label>
-            <input type="text" name="newCategory" id="newCategory" placeholder='enter new category here' onChange={handleNewCategoryEnter}/>
-            <label htmlFor="description">Description: </label>
-            <input type="text" name="description" id="description" placeholder='enter description here' onChange={handleChange} value={editedEvent.description}/>
-            <label htmlFor="date">Date: </label>
-            <input type="date" name="date" id="date" placeholder='choose date' onChange={handleChange} value={editedEvent.date}/>
-            <label htmlFor="location">Location: </label>
-            <input type="text" name="location" id="location" placeholder='enter location here' onChange={handleChange} value={editedEvent.location}/>
-            <button type="submit" >{isLoading ? 'Loading...' : 'Submit'}</button>
-        </form>
-    </div>
+    <Box position='fixed' ml={40} mt={10} 
+      sx={{
+      width: 700,
+      minHeight: 500,
+      borderRadius: 5,
+      backgroundColor: 'primary.light', 
+      display: 'flex', 
+      flexDirection: 'column',     
+    }}>
+        <Typography variant="h6" ml={2} mb={2} mt={2} color={'white'}>
+            Update Event 
+        </Typography>        
+        <Button variant="contained" color="secondary" mb={2} mt={2} onClick={() => setEditEvent(false)}> CANCEL </Button>
+         
+        <FormControl variant="outlined" sx={{ m: 1, bgcolor: 'background.paper' }}>                      
+            <TextField variant='outlined' name='name' value={editedEvent.name} onChange={handleChange} placeholder="Name"/>
+        </FormControl>
+        <FormControl variant="outlined" sx={{ m: 1, bgcolor: 'background.paper' }}>                
+            <TextField variant='outlined' name='description' value={editedEvent.description} onChange={handleChange} placeholder="Description" />
+        </FormControl>
+        <FormControl variant="outlined" sx={{ m: 1, bgcolor: 'background.paper' }}>
+            <InputLabel >Select Category</InputLabel>
+            <Select name="categoryId"  onChange={handleChange} disabled={isNewCategory} >                  
+                {categories.map(category => <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>)}
+            </Select>
+        </FormControl>
+        <FormControl variant="outlined" sx={{ m: 1, bgcolor: 'background.paper' }}>
+            <TextField variant='outlined' name="newCategory" placeholder='Or enter new category here' onChange={handleNewCategoryEnter} />
+        </FormControl>         
+        <FormControl variant="outlined" sx={{ m: 1, bgcolor: 'background.paper' }}>
+            <TextField variant='outlined' name='location' value={editedEvent.location} onChange={handleChange} placeholder="Location" />
+        </FormControl>
+        <FormControl variant="outlined" sx={{ m: 1, bgcolor: 'background.paper' }}>
+            <TextField type='date' variant='outlined' name='date' value={editedEvent.date} onChange={handleChange} />
+        </FormControl>        
+        <FormControl sx={{ minWidth: 100, mt: 4 }}>
+                <Button type="submit" variant="contained" color="success" size="large" onClick={handleSubmit} >{isLoading ? 'Loading...' : 'Save Changes'}</Button>
+        </FormControl>
+        {errors ? errors.map(error => <Typography key={error} variant="body1" color="error">{error}</Typography>) : null}
+    </Box>
   )
 }
 

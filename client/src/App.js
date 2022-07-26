@@ -2,7 +2,6 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import { UserProvider } from './components/context/user.jsx';
 import NavBar from './components/Navigation/NavBar';
 import Home from './components/Pages/Home';
 import Signup from './components/Authentication/Signup';

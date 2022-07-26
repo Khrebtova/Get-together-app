@@ -136,13 +136,10 @@ const EventPage = ({event, onSetSelectedEvent, onUpdateEvents, onDeleteEvent, se
   }
   
   return (
-    <Box 
-      position='fixed' 
-      ml={60}
-      mt={20} 
+    <Box position='fixed' ml={40} mt={10} 
       sx={{
       alignSelf: "center",
-      width: 500,
+      width: 700,
       height: 500,
       borderRadius: 5,
       backgroundColor: 'primary.light',      
