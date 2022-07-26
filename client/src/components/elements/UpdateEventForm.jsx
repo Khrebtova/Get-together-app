@@ -1,6 +1,6 @@
 import React , { useState } from 'react'
 import { headers } from '../../Globals'
-import {Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, Typography, Divider } from '@mui/material'
+import {Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, Typography} from '@mui/material'
 
 const UpdateEventForm = ({event, categories, onUpdateEvents, onSetSelectedEvent, setEditEvent, onAddCategory}) => {
     const [errors, setErrors] = useState([]);

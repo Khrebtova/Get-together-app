@@ -2,6 +2,7 @@ import React , { useState, useContext }from 'react'
 import { useNavigate } from 'react-router-dom'
 import { headers } from '../../Globals'
 import {UserContext} from '../context/user'
+import { Box, TextField, Button, FormControl, Typography, Divider } from '@mui/material'
 
 const Signup = () => {
   const {user, setUser} = useContext(UserContext)
@@ -15,9 +16,9 @@ const Signup = () => {
       "passwordConfirmation": ''        
   }
   const [newUser, setNewUser] = useState(defaultData)
-  
+  console.log("newUser", newUser)
   const handleChange = (e) => {
-      let key = e.target.id
+      let key = e.target.name
       let value = e.target.value
       let formData = {...newUser, [key]: value}        
       setNewUser(formData)
@@ -54,42 +55,30 @@ const Signup = () => {
   if (user) return <h2>You already logged in {user.username}!</h2>
 
   return (
-    <form onSubmit={handleSubmit}>
-        <h2>Create new account</h2>
-        <label htmlFor="username">Username</label>
-        <input
-        type="text"
-        id="username"
-        autoComplete="off"
-        value={newUser.username}
-        
-        onChange={handleChange}
-        />      
-    
-        <label htmlFor="password">Password</label>
-        <input
-        type="password"
-        id="password"
-        value={newUser.password}        
-        onChange={handleChange}
-        autoComplete="current-password"
-        />
-    
-        <label htmlFor="password">Password Confirmation</label>
-        <input
-        type="password"
-        id="passwordConfirmation"
-        value={newUser.passwordConfirmation}
-        onChange={handleChange}        
-        autoComplete="current-password"
-        />   
-    
-        <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>     
-        <h3>Or login to your account</h3>
-        <button onClick={()=>navigate('/login')}>Login</button>
-        {errors ? errors.map((err) => (<p style={{color: 'red'}} key={err}>{err}</p>)) : null}
-  
-    </form>
+    <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 10, ml: 20, mr: 20}}>
+      <Typography variant="h3" mb={2} mt={2} >
+        Create New Account: 
+      </Typography>
+      <Divider />
+
+      <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>                
+        <TextField variant='outlined' name='username' onChange={handleChange} placeholder="Username"/>
+      </FormControl>
+      <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>
+        <TextField variant='outlined' type='password' name='password'  onChange={handleChange} placeholder="Password" />
+      </FormControl>
+      <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>
+        <TextField variant='outlined' type='password' name='passwordConfirmation' onChange={handleChange} placeholder="Confirm password" />      
+      </FormControl>
+      {errors.map((err, i) => <Typography key={i} variant="body1" mb={2} mt={2} color="error" >{err}</Typography>)}
+      <FormControl sx={{ minWidth: 100, mt: 4 }}>
+        <Button variant="contained" color="primary" onClick={handleSubmit}> {isLoading ? "Loading..." : "Sign Up"}</Button>
+      </FormControl>
+      <Divider />
+      <Typography variant="body1" mb={2} mt={2}>
+        Already have an account? <a href="/login">Login</a>
+      </Typography>
+    </Box>
   )
 }
 
