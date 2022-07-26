@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { headers } from '../../Globals'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../context/user'
+import { Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, Typography, Divider } from '@mui/material'
 
 const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent}) => {
     const {user} = useContext(UserContext)
@@ -78,7 +79,7 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
             if (res.ok) {
                 res.json().then(event => {                    
                     onAddEvent(event)
-                    console.log("event added", event)
+                    console.log("event added")
                     onAddCategory(event.category)
                     navigate('/myevents')
                 })
@@ -88,28 +89,40 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
     }
    
     return (   
-        <div style={{display: "flex", flexDirection: "column", justifyContent: "space-around"}}>
-            <h2>create New Event here: </h2>
-            <form onSubmit={handleSubmit} style={{display: "flex", flexDirection: "column", justifyContent: "space-around"}}>
-                <label htmlFor="name">Name: </label>
-                <input type="text" name="name" id="name" placeholder='enter name here' onChange={handleChange}/>
-                <label htmlFor="categoryId">Choose category: </label>
-                <select name="categoryId" id="categoryId" onChange={handleChange} disabled={isNewCategory}>
-                    <option value="">Choose category</option>
-                    {categories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)}
-                </select>
-                <label htmlFor="newCategory">Or enter new category: </label>
-                <input type="text" name="newCategory" id="newCategory" placeholder='enter new category here' onChange={handleNewCategoryEnter}/>
-                <label htmlFor="description">Description: </label>
-                <input type="text" name="description" id="description" placeholder='enter description here' onChange={handleChange}/>
-                <label htmlFor="date">Date: </label>
-                <input type="date" name="date" id="date" placeholder='choose date' onChange={handleChange}/>
-                <label htmlFor="location">Location: </label>
-                <input type="text" name="location" id="location" placeholder='enter location here' onChange={handleChange}/>
-                <button type="submit" >{isLoading ? 'Loading...' : 'Submit'}</button>
-            </form>
-            {errors ? errors.map((err) => (<p style={{color: 'red'}} key={err}>{err}</p>)) : null}
-        </div>
+        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 10, ml: 20, mr: 20}}>
+            <Typography variant="h6" mb={2} mt={2}>
+                Create New Event here: 
+            </Typography>
+
+            <Divider />
+            
+            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>                
+                <TextField variant='outlined' name='name' value={newEvent.name} onChange={handleChange} placeholder="Name"/>
+            </FormControl>
+            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2}}>                
+                <TextField variant='outlined' name='description' value={newEvent.description} onChange={handleChange} placeholder="Description" />
+            </FormControl>
+            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>
+                <InputLabel >Select Category</InputLabel>
+                <Select name="categoryId"  onChange={handleChange} disabled={isNewCategory} value={newEvent.categoryId}>                  
+                {categories.map(category => <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>)}
+                </Select>
+            </FormControl>
+            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>
+                <TextField variant='outlined' name="newCategory" placeholder='enter new category here' onChange={handleNewCategoryEnter} />
+            </FormControl>         
+            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>
+                <TextField variant='outlined' name='location' value={newEvent.location} onChange={handleChange} placeholder="Location" />
+            </FormControl>
+            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>
+                <TextField type='date' variant='outlined' name='date' value={newEvent.date} onChange={handleChange} />
+            </FormControl>
+            <FormControl sx={{ minWidth: 100, mt: 4 }}>
+                <Button type="submit" variant="contained" color="primary" size="large" onClick={handleSubmit} >{isLoading ? 'Loading...' : 'Save Event'}</Button>
+            </FormControl>
+            
+            {errors ? errors.map(error => <Typography key={error} variant="body1" color="error">{error}</Typography>) : null}
+        </Box>
     )
 }
 

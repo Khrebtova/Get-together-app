@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import {Link, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import {UserContext} from '../context/user'
 // Material UI Components: 
 import AppBar from '@mui/material/AppBar';
@@ -7,13 +7,14 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import Divider from '@mui/material/Divider';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+
+
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -29,14 +30,11 @@ const Navbar = () => {
   };
 
   const loggedInLinks = () => {
-    const letter = user.username.slice(0,1).toUpperCase()
-   
+    const letter = user.username.slice(0,1).toUpperCase()   
     return(
       <>        
         <Button color="inherit" onClick={()=>navigate('/events')}>Browse all events</Button>
-        <Button color="inherit" onClick={()=>navigate('/events/new')}>Create new Event</Button>        
-        {/* <Button color="inherit" onClick={()=>navigate('/myevents')}>My Events</Button> */}
-        {/* <Button color="inherit" onClick={()=>navigate('/logout')}>Logout</Button> */}
+        <Button color="inherit" onClick={()=>navigate('/events/new')}>Create new Event</Button>
         <div>
           <Tooltip title="menu">
             <IconButton
@@ -72,6 +70,7 @@ const Navbar = () => {
       </>  
     )
   }
+
   const loggedOutLinks = () => {
     return(
       <>        
@@ -80,9 +79,10 @@ const Navbar = () => {
       </>  
     )
   }
-  return (
+
+  return (      
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="fixed" >
         <Toolbar>       
           <Typography 
             variant="h6" component="div" 
@@ -91,11 +91,11 @@ const Navbar = () => {
           >
             LET'S GET TOGETHER
           </Typography>
-        <Divider />     
+        <Divider/>     
         {user ? loggedInLinks() : loggedOutLinks()} 
         </Toolbar>
       </AppBar>                
-    </Box>
+    </Box>    
   )
 }
 

@@ -14,6 +14,7 @@ import NewEventForm from './components/Pages/NewEventForm';
 import EventPage from './components/Pages/EventPage';
 import UpdateEventForm from './components/elements/UpdateEventForm.jsx';
 
+
 function App() {
   const [events, setEvents] = useState([])
   const [categories, setCategories] = useState([])  
@@ -60,10 +61,9 @@ function App() {
     }
   }
   
-  return (
-    <div className="App"> 
-      {/* <UserProvider> */}
-        <Router>
+  return (    
+    <div >      
+        <Router>          
           <NavBar />
           {editEvent ? <UpdateEventForm event={selectedEvent} categories={categories} onAddCategory={addCategory} onUpdateEvents={updateEvents} setEditEvent={setEditEvent} onSetSelectedEvent={setSelectedEvent}/> : null}
           {selectedEvent && !editEvent ? <EventPage event={selectedEvent} setEditEvent={setEditEvent} onSetSelectedEvent={setSelectedEvent} onDeleteEvent={deleteEvent} onUpdateEvents={updateEvents}/> : null}
@@ -76,9 +76,9 @@ function App() {
             <Route path="/events" element ={<EventBrowser events={events} onUpdateEvents={updateEvents} categories={categories} onSetSelectedEvent={setSelectedEvent} />} /> 
             <Route path="/events/new" element={<NewEventForm categories={categories} onAddEvent={addEvent} onAddCategory={addCategory} onSetSelectedEvent={setSelectedEvent}/>} /> 
           </Routes>
-        </Router>      
-      {/* </UserProvider>           */}
+        </Router>     
     </div>
+    
   );
 }
 

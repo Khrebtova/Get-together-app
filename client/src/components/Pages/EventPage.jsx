@@ -1,14 +1,14 @@
 import React, { useState, useContext }  from 'react'
 import {UserContext} from '../context/user'
 import { headers } from '../../Globals'
+import Box from '@mui/material/Box';
 
 const EventPage = ({event, onSetSelectedEvent, onUpdateEvents, onDeleteEvent, setEditEvent}) => {
+  const [comment, setComment] = useState('')
   const {user} = useContext(UserContext)   
   const isHost = event.host.id === user.id
   const isAttending  = event.guests.map(guest => guest.id).includes(user.id)
- 
   const commentList = event.comments
-  const [comment, setComment] = useState('')
  
   const handleClickAttend = () => {    
     // fetch (`/participations/${event.id}/${user.id}`, {
@@ -90,7 +90,8 @@ const EventPage = ({event, onSetSelectedEvent, onUpdateEvents, onDeleteEvent, se
 
   const hostEventPage = () => {
     return(
-      <div style={{border: 'solid blue'}}>        
+      <div >        
+        <button onClick={()=>onSetSelectedEvent(null)}>X</button>
         <h3 >{event.name}</h3>
         <p >description: {event.description}</p>
         <p>host: You </p>
@@ -105,7 +106,6 @@ const EventPage = ({event, onSetSelectedEvent, onUpdateEvents, onDeleteEvent, se
             <button type="submit" >add</button>
           </form>
         </ul>
-        <button onClick={()=>onSetSelectedEvent(null)}>Close</button>
         <button onClick={()=> setEditEvent(true)}>Edit</button>
         <button onClick={handleClickDelete}>Delete Event</button>
       </div>
@@ -114,8 +114,9 @@ const EventPage = ({event, onSetSelectedEvent, onUpdateEvents, onDeleteEvent, se
 
   const guestEventPage = () => {
     return(
-      <div style={{border: 'solid red'}}>
-        {event.name} details page
+      <div >
+        <button onClick={()=>onSetSelectedEvent(null)} >X</button>
+        <h2>{event.name}</h2>
         <p>description: {event.description}</p>
         <p>host: {event.host.username}</p>
         <p>location: {event.location}</p>
@@ -129,16 +130,25 @@ const EventPage = ({event, onSetSelectedEvent, onUpdateEvents, onDeleteEvent, se
             <button type="submit" >add</button>
           </form>
         </ul>
-        <button onClick={()=>onSetSelectedEvent(null)}>Close</button>
         {isAttending ? <button onClick={handleClickUnattend}>Can't go, sorry</button> : <button onClick={handleClickAttend}>Attend Event</button>}
       </div>
     )
   }
   
   return (
-    <div >
-      {isHost ? hostEventPage() : guestEventPage()}
-    </div>
+    <Box 
+      position='fixed' 
+      ml={60}
+      mt={20} 
+      sx={{
+      alignSelf: "center",
+      width: 500,
+      height: 500,
+      borderRadius: 5,
+      backgroundColor: 'primary.light',      
+      }}>      
+      {isHost ? hostEventPage() : guestEventPage()}      
+    </Box>
   )
 }
 
