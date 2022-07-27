@@ -45,7 +45,7 @@ const Navbar = () => {
               onClick={handleMenu}
               color="inherit"
             >
-              <Avatar sx={{ width: 32, height: 32}}>{letter}</Avatar>
+              <Avatar sx={{ width: 42, height: 42, bgcolor: 'white', color: 'purple', fontFamily: 'monospace', fontWeight: 700}}>{letter}</Avatar>
             </IconButton>
           </Tooltip>
           <Menu
@@ -82,10 +82,10 @@ const Navbar = () => {
 
   return (      
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" >
+      <AppBar position="fixed" color='secondary'>
         <Toolbar>       
           <Typography 
-            variant="h6" component="div" 
+            variant="h4" component="div" 
             sx={{ flexGrow: 1, mr: 2, fontFamily: 'monospace', fontWeight: 700, letterSpacing: '.3rem', color: 'inherit', textDecoration: 'none'}} 
             onClick={()=>navigate('/')}
           >

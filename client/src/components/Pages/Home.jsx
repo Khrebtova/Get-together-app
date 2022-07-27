@@ -1,16 +1,25 @@
 import React, { useContext, useEffect, useState} from 'react'
 import {UserContext} from '../context/user'
+import { Box, Typography, Divider, Paper} from '@mui/material'
 
 const Home = ({onSetSelectedEvent, events}) => {
   const {user} = useContext(UserContext)
+  const [loading, setLoading] = useState(true)
   const [lastComments, setLastComments] = useState([])
+  const [lastEvents, setLastEvents] = useState([])
   
   useEffect(() => {
-    onSetSelectedEvent(null)
+    
     fetch('/comments/last_five')
     .then(res => res.json())
     .then(comments => setLastComments(comments))
-  } , [onSetSelectedEvent])
+
+    fetch('/events/last_five')
+    .then(res => res.json())
+    .then(events => {setLastEvents(events); setLoading(false)})
+  } , [])
+
+
 
   if (!user) return <p>Please log in to see Home Page</p>
 
@@ -20,23 +29,38 @@ const Home = ({onSetSelectedEvent, events}) => {
   }
 
   const renderLastComments =()=> {
-    return lastComments.map(comment =><p key={comment.id} onClick={()=>handleSelectEvent(comment.event.id)}>
-      {comment.user.username} said on '{comment.event.name}' : "{comment.text}"</p>
+    return lastComments.map(comment =><Typography component="li" key={comment.id} onClick={()=>handleSelectEvent(comment.event.id)}>
+      {comment.user.username} said on '{comment.event.name}' : "{comment.text}"</Typography>
     )}
   
-  const renderLastEvents = () => {
-      const lastEvents = events.slice(-3)
-      return lastEvents.map(event =><p key={event.id} onClick={()=>onSetSelectedEvent(event)}>{event.name}, by {event.host.username}</p>)
+  const renderLastEvents = () => {      
+      return lastEvents.map(event =><Typography component="li" key={event.id} onClick={()=>onSetSelectedEvent(event)}>{event.name}, by {event.host.username}</Typography>)
     }
 
   return (
-    <div>
-      <h1>Welcome to 'Get Together', {user.username}!</h1>
-      <h4>Here some last comments, if you missed: </h4>
-      {renderLastComments()}
-      <h4>Here newest events, if you missed: </h4>
-      {renderLastEvents()}   
-    </div>
+    <Box sx={{display: 'flex' , flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 12, ml: 10, mr: 10}} >
+      <Typography variant="h3">Welcome, {user.username}!</Typography>
+      <Divider />
+
+      <Box sx={{bgcolor: '#f3c460', mt: 5}}>
+        <Paper elevation={3}  sx={{ mt: 5, mr: 2, ml: 2}}>
+          <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', flexWrap: 'wrap', m: 2}}>
+          <Typography variant='h6'>Here some newest comments, if you missed: </Typography>
+          <ul>
+            {loading ? <Typography>Loading..</Typography> : renderLastComments()}
+          </ul>
+          </Box>
+        </Paper> 
+        <Paper elevation={3}  sx={{ mt: 5, mr: 2, ml: 2}}>
+          <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', flexWrap: 'wrap', m: 2}}>
+          <Typography variant='h6'>Here some newest events, if you missed: </Typography>
+          <ul>
+            {loading ? <Typography>Loading..</Typography> : renderLastEvents()}
+          </ul>   
+          </Box>
+        </Paper>
+        </Box>      
+    </Box>
   )
 }
 

@@ -95,32 +95,32 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
             </Typography>
 
             <Divider />
-            
-            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>                
+            <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', bgcolor: '#f3c460'}}>
+            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2, ml: 2, mr: 2, bgcolor: 'white' }}>                
                 <TextField variant='outlined' name='name' value={newEvent.name} onChange={handleChange} placeholder="Name"/>
             </FormControl>
-            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2}}>                
+            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2, ml: 2, mr: 2, bgcolor: 'white' }}>                
                 <TextField variant='outlined' name='description' value={newEvent.description} onChange={handleChange} placeholder="Description" />
             </FormControl>
-            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>
+            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2, ml: 2, mr: 2, bgcolor: 'white'  }}>
                 <InputLabel >Select Category</InputLabel>
                 <Select name="categoryId"  onChange={handleChange} disabled={isNewCategory} value={newEvent.categoryId}>                  
                 {categories.map(category => <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>)}
                 </Select>
             </FormControl>
-            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>
+            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2, ml: 2, mr: 2, bgcolor: 'white'  }}>
                 <TextField variant='outlined' name="newCategory" placeholder='enter new category here' onChange={handleNewCategoryEnter} />
             </FormControl>         
-            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>
+            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2, ml: 2, mr: 2, bgcolor: 'white'  }}>
                 <TextField variant='outlined' name='location' value={newEvent.location} onChange={handleChange} placeholder="Location" />
             </FormControl>
-            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>
+            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2, ml: 2, mr: 2, bgcolor: 'white'  }}>
                 <TextField type='date' variant='outlined' name='date' value={newEvent.date} onChange={handleChange} />
             </FormControl>
             <FormControl sx={{ minWidth: 100, mt: 4 }}>
-                <Button type="submit" variant="contained" color="primary" size="large" onClick={handleSubmit} >{isLoading ? 'Loading...' : 'Save Event'}</Button>
+                <Button type="submit" variant="contained" color="secondary" size="large" onClick={handleSubmit} >{isLoading ? 'Loading...' : 'Save Event'}</Button>
             </FormControl>
-            
+            </Box>
             {errors ? errors.map(error => <Typography key={error} variant="body1" color="error">{error}</Typography>) : null}
         </Box>
     )

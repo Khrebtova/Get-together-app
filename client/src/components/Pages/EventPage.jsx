@@ -1,7 +1,8 @@
 import React, { useState, useContext }  from 'react'
 import {UserContext} from '../context/user'
 import { headers } from '../../Globals'
-import Box from '@mui/material/Box';
+import {Box, Paper }from '@mui/material';
+
 
 const EventPage = ({event, onSetSelectedEvent, onUpdateEvents, onDeleteEvent, setEditEvent}) => {
   const [comment, setComment] = useState('')
@@ -121,7 +122,7 @@ const EventPage = ({event, onSetSelectedEvent, onUpdateEvents, onDeleteEvent, se
         <p>host: {event.host.username}</p>
         <p>location: {event.location}</p>
         <p>date: {event.date}</p>
-        <p>Who is going? : {event.guests.map(guest=> <span  key={guest.id}>{guest.username} </span>)}</p>
+        <p>Who is going? : {event.guests.map(guest => guest.username).join(', ')}</p>
         <p>Comments:</p>
         <ul>
           {renderComments()}
@@ -136,15 +137,12 @@ const EventPage = ({event, onSetSelectedEvent, onUpdateEvents, onDeleteEvent, se
   }
   
   return (
-    <Box position='fixed' ml={40} mt={10} 
-      sx={{
-      alignSelf: "center",
-      width: 700,
-      height: 500,
-      borderRadius: 5,
-      backgroundColor: 'primary.light',      
-      }}>      
-      {isHost ? hostEventPage() : guestEventPage()}      
+    <Box position='fixed' sx={{width: '100%', backgroundColor: '#f3c460' }}>
+      <Paper sx={{padding: '25px', m: 5}}>        
+        
+          {isHost ? hostEventPage() : guestEventPage()}      
+            
+      </Paper>
     </Box>
   )
 }

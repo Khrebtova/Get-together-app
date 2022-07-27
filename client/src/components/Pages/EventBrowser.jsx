@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState} from 'react'
 import {UserContext} from '../context/user'
 import Event from '../elements/Event'
+import { Box, Button, Typography, Divider, TextField, Select, MenuItem, InputLabel, FormControl } from '@mui/material'
 
 const EventBrowser = ({events, onUpdateEvents, categories, onSetSelectedEvent}) => {
   const {user} = useContext(UserContext)
@@ -9,7 +10,7 @@ const EventBrowser = ({events, onUpdateEvents, categories, onSetSelectedEvent}) 
   
   useEffect(() => {
     onSetSelectedEvent(null)
-  } , [onSetSelectedEvent]) 
+  } , [onSetSelectedEvent, user]) 
   
   if (!user) return <p>Please log in to see the event browser</p>
 
@@ -27,18 +28,29 @@ const EventBrowser = ({events, onUpdateEvents, categories, onSetSelectedEvent}) 
   }
 
   return (
-    <div>      
-        <h2>EventBrowser</h2>
-        <input type="text" placeholder=' 🔍 SEARCH' onChange={(e)=>setSearch(e.target.value.toLowerCase())} value={search}/>
-        <select onChange={(e)=>setCategoryFilter(e.target.value)} >
-          <option value=''>All</option>
-          {categories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)}
-        </select>
-        <button onClick={handleResetFilters}> Reset all filters</button>
-        <div style={{display: "flex", justifyContent: 'space-around', flexDirection: 'row', alignItems: 'flex-start', flexWrap: 'wrap'}}>
+    <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 10, ml: 10, mr: 10}}>      
+      <Box sx={{display: 'flex' , flexDirection: 'row'}}>
+        <Typography variant="h3" m={2}>
+          Event Browser 
+        </Typography>
+        <TextField variant='outlined' label='🔍 Search' value={search} onChange={e => setSearch(e.target.value.toLowerCase())} sx={{m: 2}}/>
+        <FormControl variant="outlined" sx={{ minWidth: 200, m: 2}}>
+          <InputLabel >Select Category</InputLabel>
+          <Select  onChange={(e)=>setCategoryFilter(e.target.value)} value={categoryFilter}>
+            <MenuItem value="">Show All</MenuItem>                  
+            {categories.map(category => <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>)}
+          </Select>
+        </FormControl>        
+        <Button size='large' color="success" sx={{m: 2, height: 55}} onClick={handleResetFilters}> Reset all filters</Button>
+      </Box>
+      
+      <Divider />
+
+      <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', mb: 1, mt: 5, bgcolor: '#f3c460'}}>
           {eventList.length > 0 ? displayEvents : <p>Nothing was found, change filters</p>}
-        </div>       
-    </div>
+      </Box>       
+              
+    </Box>
   )
 }
 

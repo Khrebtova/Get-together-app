@@ -40,11 +40,11 @@ const Signup = () => {
       }).then((r) => { 
         setIsLoading(false);          
         if (r.ok) {
-          r.json().then((user) => {
+          r.json().then((createdUser) => {
+            setUser(createdUser)
             console.log("account created")
-            navigate('/')
+            navigate('/login')
             setNewUser(defaultData)
-            setUser(user)
           });
         } else {
           r.json().then((err) => setErrors(err.errors));
@@ -72,7 +72,7 @@ const Signup = () => {
       </FormControl>
       {errors.map((err, i) => <Typography key={i} variant="body1" mb={2} mt={2} color="error" >{err}</Typography>)}
       <FormControl sx={{ minWidth: 100, mt: 4 }}>
-        <Button variant="contained" color="primary" onClick={handleSubmit}> {isLoading ? "Loading..." : "Sign Up"}</Button>
+        <Button variant="contained" color="secondary" onClick={handleSubmit}> {isLoading ? "Loading..." : "Sign Up"}</Button>
       </FormControl>
       <Divider />
       <Typography variant="body1" mb={2} mt={2}>

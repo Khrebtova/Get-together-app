@@ -17,16 +17,17 @@ const Login = () => {
             method: "POST",
             headers,
             body: JSON.stringify({ username, password }),
-          }).then((r) => {            
+        })        
+        .then((r) => {            
             if (r.ok) {
                 r.json().then((user) => {                    
                     setUser(user)
-                    navigate('/')                    
+                    navigate('/events')                    
                 });
             } else {
                 r.json().then((err) => setErrors(err.errors));
             }
-          });
+        });
     }
 
     if (user) return <h2>You already logged in {user.username}!</h2>
@@ -45,17 +46,9 @@ const Login = () => {
         </FormControl>
         {errors.map((err, i) => <Typography key={i} variant="body1" mb={2} mt={2} color="error" >{err}</Typography>)}
         <FormControl sx={{ minWidth: 100, mt: 4 }}>
-            <Button variant="contained" color="primary" onClick={handleSubmit}> Login </Button>
+            <Button variant="contained" color="secondary" onClick={handleSubmit}> Login </Button>
         </FormControl>
-        {/* <div>            
-            <form onSubmit={handleSubmit}>                
-                <input type="text" id="username" placeholder="username"  autoComplete="off" value={username} onChange={(e) => setUsername(e.target.value)}/>
-                <input type="password" id="password" placeholder="password" autoComplete="off" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button type="submit">Login</button>
-                {errors? errors.map(error => <p style={{color: 'red'}} key={error}>{error}</p>) : null}
-            </form>
-           
-        </div> */}
+        
             <Typography variant="body1" mb={2} mt={2}>
                 Don't have an account? <a href="/signup">Signup</a>
             </Typography>
