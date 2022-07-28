@@ -1,6 +1,15 @@
 import React , { useState } from 'react'
 import { headers } from '../../Globals'
+import { styled } from '@mui/material/styles';
 import {Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, Typography} from '@mui/material'
+
+const NewEventFormControl = styled(FormControl)({    
+    minWidth: 100, 
+    marginRight: 100, 
+    marginLeft: 100, 
+    marginTop: 2, 
+    backgroundColor: 'white' 
+})
 
 const UpdateEventForm = ({event, categories, onUpdateEvents, onSetSelectedEvent, setEditEvent, onAddCategory}) => {
     const [errors, setErrors] = useState([]);
@@ -14,8 +23,7 @@ const UpdateEventForm = ({event, categories, onUpdateEvents, onSetSelectedEvent,
         category_id: event.category.id,
         newCategory: '',
         id: event.id
-    })
-    
+    })    
 
     const handleChange = (e) => {
         setEditedEvent({...editedEvent, [e.target.name]: e.target.value})
@@ -63,11 +71,10 @@ const UpdateEventForm = ({event, categories, onUpdateEvents, onSetSelectedEvent,
             setIsLoading(false)
             if (res.ok) {
                 res.json().then(event => {                    
-                    console.log("event updated")
                     setEditEvent(false)
                     onUpdateEvents(event)
                     onAddCategory(event.category)
-                    onSetSelectedEvent(event)
+                    onSetSelectedEvent(event)                    
                 })
             }else{
                 res.json().then(err => setErrors(err.errors))
@@ -76,43 +83,30 @@ const UpdateEventForm = ({event, categories, onUpdateEvents, onSetSelectedEvent,
 
 
   return (
-    <Box position='fixed' ml={40} mt={10} 
-      sx={{
-      width: 700,
-      minHeight: 500,
-      borderRadius: 5,
-      backgroundColor: 'primary.light', 
-      display: 'flex', 
-      flexDirection: 'column',     
-    }}>
-        <Typography variant="h6" ml={2} mb={2} mt={2} color={'white'}>
-            Update Event 
-        </Typography>        
-        <Button variant="contained" color="secondary" mb={2} mt={2} onClick={() => setEditEvent(false)}> CANCEL </Button>
-         
-        <FormControl variant="outlined" sx={{ m: 1, bgcolor: 'background.paper' }}>                      
-            <TextField variant='outlined' name='name' value={editedEvent.name} onChange={handleChange} placeholder="Name"/>
-        </FormControl>
-        <FormControl variant="outlined" sx={{ m: 1, bgcolor: 'background.paper' }}>                
-            <TextField variant='outlined' name='description' value={editedEvent.description} onChange={handleChange} placeholder="Description" />
-        </FormControl>
-        <FormControl variant="outlined" sx={{ m: 1, bgcolor: 'background.paper' }}>
-            <InputLabel >Select Category</InputLabel>
-            <Select name="categoryId"  onChange={handleChange} disabled={isNewCategory} >                  
+    <Box mt={9} sx={{width: '100%', display: 'flex', position: 'relative', flexDirection: 'column', bgcolor: '#dddedf'}}>
+        <NewEventFormControl>                      
+            <TextField variant='outlined' size="small" name='name' value={editedEvent.name} onChange={handleChange} placeholder="Name"/>
+        </NewEventFormControl>
+        <NewEventFormControl>                
+            <TextField variant='outlined' size="small" name='description' value={editedEvent.description} onChange={handleChange} placeholder="Description" />
+        </NewEventFormControl>
+        <NewEventFormControl>           
+            <Select name="category_id"  onChange={handleChange} disabled={isNewCategory} size="small" value={editedEvent.category_id}>                  
                 {categories.map(category => <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>)}
             </Select>
-        </FormControl>
-        <FormControl variant="outlined" sx={{ m: 1, bgcolor: 'background.paper' }}>
-            <TextField variant='outlined' name="newCategory" placeholder='Or enter new category here' onChange={handleNewCategoryEnter} />
-        </FormControl>         
-        <FormControl variant="outlined" sx={{ m: 1, bgcolor: 'background.paper' }}>
-            <TextField variant='outlined' name='location' value={editedEvent.location} onChange={handleChange} placeholder="Location" />
-        </FormControl>
-        <FormControl variant="outlined" sx={{ m: 1, bgcolor: 'background.paper' }}>
-            <TextField type='date' variant='outlined' name='date' value={editedEvent.date} onChange={handleChange} />
-        </FormControl>        
-        <FormControl sx={{ minWidth: 100, mt: 4 }}>
-                <Button type="submit" variant="contained" color="success" size="large" onClick={handleSubmit} >{isLoading ? 'Loading...' : 'Save Changes'}</Button>
+        </NewEventFormControl>
+        <NewEventFormControl>
+            <TextField variant='outlined' size="small" name="newCategory" placeholder='Or enter new category here' onChange={handleNewCategoryEnter} />
+        </NewEventFormControl>         
+        <NewEventFormControl>
+            <TextField variant='outlined' size="small" name='location' value={editedEvent.location} onChange={handleChange} placeholder="Location" />
+        </NewEventFormControl>
+        <NewEventFormControl>
+            <TextField type='date' size="small" variant='outlined' name='date' value={editedEvent.date} onChange={handleChange} />
+        </NewEventFormControl>        
+        <FormControl sx={{ minWidth: 100, mt: 4, flexDirection: 'row', justifyContent: 'space-around' }}>
+            <Button variant="contained" color="error" mb={2} mt={2} onClick={() => {setEditEvent(false); onSetSelectedEvent(null)}}> CANCEL </Button>
+            <Button type="submit" variant="contained" color="success" size="large" onClick={handleSubmit} >{isLoading ? 'Loading...' : 'Save Changes'}</Button>
         </FormControl>
         {errors ? errors.map(error => <Typography key={error} variant="body1" color="error">{error}</Typography>) : null}
     </Box>

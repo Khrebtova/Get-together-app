@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState} from 'react'
 import {UserContext} from '../context/user'
+
+
 import { Box, Typography, Divider, Paper} from '@mui/material'
 
-const Home = ({onSetSelectedEvent, events}) => {
+const Home = ({onSetSelectedEvent, events, today}) => {
   const {user} = useContext(UserContext)
+  
   const [loading, setLoading] = useState(true)
   const [lastComments, setLastComments] = useState([])
   const [lastEvents, setLastEvents] = useState([])
   
-  useEffect(() => {
-    
+  useEffect(() => {    
     fetch('/comments/last_five')
     .then(res => res.json())
     .then(comments => setLastComments(comments))
@@ -17,11 +19,9 @@ const Home = ({onSetSelectedEvent, events}) => {
     fetch('/events/last_five')
     .then(res => res.json())
     .then(events => {setLastEvents(events); setLoading(false)})
-  } , [])
+  } , [])  
 
-
-
-  if (!user) return <p>Please log in to see Home Page</p>
+  if (!user) return <Typography variant="h3" m={15}>Please login</Typography>
 
   const handleSelectEvent = (id) => {    
     const event = events.find(event => event.id === id)
@@ -37,12 +37,25 @@ const Home = ({onSetSelectedEvent, events}) => {
       return lastEvents.map(event =><Typography component="li" key={event.id} onClick={()=>onSetSelectedEvent(event)}>{event.name}, by {event.host.username}</Typography>)
     }
 
+  const renderTodayEvents = () => {
+      const todayEvents = events.filter(event => event.date === today)
+      if (todayEvents.length === 0) return <p>No events today</p>      
+      return todayEvents.map(event => <Typography key={event.id} component="li" onClick={()=>onSetSelectedEvent(event)}>{event.name}, by {event.host.username}</Typography>)
+  }     
+
   return (
     <Box sx={{display: 'flex' , flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 12, ml: 10, mr: 10}} >
       <Typography variant="h3">Welcome, {user.username}!</Typography>
-      <Divider />
-
+        <Divider />
       <Box sx={{bgcolor: '#f3c460', mt: 5}}>
+        <Paper elevation={3}  sx={{ mt: 5, mr: 2, ml: 2}}>
+          <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', flexWrap: 'wrap', m: 2}}>
+            <Typography variant='h6'>Events happening today: </Typography>
+            <ul>
+              {renderTodayEvents()}
+            </ul>
+          </Box>
+        </Paper>
         <Paper elevation={3}  sx={{ mt: 5, mr: 2, ml: 2}}>
           <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', flexWrap: 'wrap', m: 2}}>
           <Typography variant='h6'>Here some newest comments, if you missed: </Typography>
@@ -52,7 +65,7 @@ const Home = ({onSetSelectedEvent, events}) => {
           </Box>
         </Paper> 
         <Paper elevation={3}  sx={{ mt: 5, mr: 2, ml: 2}}>
-          <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', flexWrap: 'wrap', m: 2}}>
+          <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', m: 2}}>
           <Typography variant='h6'>Here some newest events, if you missed: </Typography>
           <ul>
             {loading ? <Typography>Loading..</Typography> : renderLastEvents()}

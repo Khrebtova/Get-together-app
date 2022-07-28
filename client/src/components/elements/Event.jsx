@@ -2,11 +2,15 @@ import React, { useState} from 'react'
 import {headers } from '../../Globals'
 import {Card, CardActions, CardContent, Button, Typography, Divider, Collapse, FormControl, TextField, IconButton }from '@mui/material';
 import Icon from '@mui/material/Icon';
-const Event = ({event, user, onUpdateEvents, onSetSelectedEvent, onDeleteEvent}) => {
+
+const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDeleteEvent}) => {
+  
   const [expanded, setExpanded] = useState(false);
   const [comment, setComment] = useState('')
   const commentList = event.comments
   const attending  = event.guests.map(guest => guest.id).includes(user.id)
+  const eventHappened = event.date < today;
+
   const renderGuestCount = () => {
     if (event.guests.length === 0) return <span>be the first one!</span>
     if (attending && event.guests.length === 1) return <span>You</span>
@@ -27,7 +31,6 @@ const Event = ({event, user, onUpdateEvents, onSetSelectedEvent, onDeleteEvent})
   }  
 
   const handleClickAttend = () => {    
-    // fetch (`/participations/${event.id}/${user.id}`, {
     fetch(`/events/${event.id}/attend/${user.id}`, {
       method: 'POST',
       headers,
@@ -49,6 +52,22 @@ const Event = ({event, user, onUpdateEvents, onSetSelectedEvent, onDeleteEvent})
     .then(r => r.json())
     .then(data => onUpdateEvents(data))
     .catch(err => console.log(err.errors))
+  }
+
+  const renderButtons = () => {
+    if (attending) {
+      if (eventHappened) {
+        return <Button size="small" variant="contained" color="error" onClick={handleClickUnattend}>Delete from my events</Button>
+      }else{
+        return <Button size="small" variant="contained" color="success" onClick={handleClickUnattend}>Can't go, sorry</Button>
+      }
+    }else{
+      if (eventHappened) {
+        return <Button size="small" variant="contained" disabled>Attend event</Button>
+      }else{
+        return <Button size="small" variant="contained" color="secondary" onClick={handleClickAttend}>Attend Event</Button>
+      }
+    }    
   }
 
   const handleSubmitComment = (e) => {
@@ -92,12 +111,13 @@ const Event = ({event, user, onUpdateEvents, onSetSelectedEvent, onDeleteEvent})
     }
   }
   return (
-    <Card variant='outlined'  sx={{ minWidth: 275 , maxWidth: 300, m: 2}}>
-      <CardContent>
+    <Card variant='outlined'  sx={{ width: 400, m: 2}}>
+      <CardContent >
+      {eventHappened ? <Typography color="error" gutterBottom> !!This event has already happened</Typography> : null}
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {event.category.name} event created by {event.host.username}
-        </Typography>
-        <Typography variant="h5" component="div">
+        </Typography>        
+        <Typography variant="h5" component="div" >
           {event.name}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -111,9 +131,9 @@ const Event = ({event, user, onUpdateEvents, onSetSelectedEvent, onDeleteEvent})
         </Typography>        
       </CardContent>
       <CardActions>
-        {attending ? <Button size="small" variant="contained" color="success" onClick={handleClickUnattend}>Can't go, sorry</Button> : <Button size="small" variant="contained" color="secondary" onClick={handleClickAttend}>Attend Event</Button>}
-        {/* <Button size="small" onClick={()=>onSetSelectedEvent(event)}>Learn More</Button> */}
-        <Button size="small" color="secondary" onClick={()=>setExpanded(!expanded)}>{expanded ? 'Show less' : 'Show More'}</Button>
+        
+        {renderButtons()}
+        <Button size="small" color="secondary" onClick={()=>setExpanded(!expanded)}>{expanded ? 'Show less ↑' : 'Show More ↓'}</Button>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

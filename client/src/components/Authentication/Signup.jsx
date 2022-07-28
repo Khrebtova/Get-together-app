@@ -16,7 +16,7 @@ const Signup = () => {
       "passwordConfirmation": ''        
   }
   const [newUser, setNewUser] = useState(defaultData)
-  console.log("newUser", newUser)
+  
   const handleChange = (e) => {
       let key = e.target.name
       let value = e.target.value
@@ -41,9 +41,8 @@ const Signup = () => {
         setIsLoading(false);          
         if (r.ok) {
           r.json().then((createdUser) => {
-            setUser(createdUser)
-            console.log("account created")
-            navigate('/login')
+            setUser(createdUser)            
+            navigate('/')
             setNewUser(defaultData)
           });
         } else {

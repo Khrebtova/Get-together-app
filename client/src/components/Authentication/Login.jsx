@@ -22,7 +22,7 @@ const Login = () => {
             if (r.ok) {
                 r.json().then((user) => {                    
                     setUser(user)
-                    navigate('/events')                    
+                    navigate('/')                    
                 });
             } else {
                 r.json().then((err) => setErrors(err.errors));

@@ -2,7 +2,16 @@ import React, { useState, useContext, useEffect } from 'react'
 import { headers } from '../../Globals'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../context/user'
+import { styled } from '@mui/material/styles';
 import { Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, Typography, Divider } from '@mui/material'
+
+const NewEventFormControl = styled(FormControl)({    
+    minWidth: 100, 
+    marginRight: 20, 
+    marginLeft: 20, 
+    marginTop: 20, 
+    backgroundColor: 'white' 
+})
 
 const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent}) => {
     const {user} = useContext(UserContext)
@@ -24,7 +33,7 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
         onSetSelectedEvent(null)
       } , [onSetSelectedEvent])
     
-    if (!user) return <p>Please log in to create new events</p>
+    if (!user) return <Typography variant="h3" m={15}>Please login</Typography>
 
     const handleChange = (e) => {
         setNewEvent({
@@ -91,32 +100,33 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
     return (   
         <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 10, ml: 20, mr: 20}}>
             <Typography variant="h3" mb={2} mt={2} >
-                Create New Event here: 
+                Create New Event 
             </Typography>
 
             <Divider />
-            <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', bgcolor: '#f3c460'}}>
-            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2, ml: 2, mr: 2, bgcolor: 'white' }}>                
+        
+            <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', bgcolor: '#dddedf'}}>
+            <NewEventFormControl >                
                 <TextField variant='outlined' name='name' value={newEvent.name} onChange={handleChange} placeholder="Name"/>
-            </FormControl>
-            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2, ml: 2, mr: 2, bgcolor: 'white' }}>                
+            </NewEventFormControl>
+            <NewEventFormControl >                
                 <TextField variant='outlined' name='description' value={newEvent.description} onChange={handleChange} placeholder="Description" />
-            </FormControl>
-            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2, ml: 2, mr: 2, bgcolor: 'white'  }}>
+            </NewEventFormControl>
+            <NewEventFormControl>
                 <InputLabel >Select Category</InputLabel>
                 <Select name="categoryId"  onChange={handleChange} disabled={isNewCategory} value={newEvent.categoryId}>                  
                 {categories.map(category => <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>)}
                 </Select>
-            </FormControl>
-            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2, ml: 2, mr: 2, bgcolor: 'white'  }}>
+            </NewEventFormControl>
+            <NewEventFormControl>
                 <TextField variant='outlined' name="newCategory" placeholder='enter new category here' onChange={handleNewCategoryEnter} />
-            </FormControl>         
-            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2, ml: 2, mr: 2, bgcolor: 'white'  }}>
+            </NewEventFormControl>         
+            <NewEventFormControl>
                 <TextField variant='outlined' name='location' value={newEvent.location} onChange={handleChange} placeholder="Location" />
-            </FormControl>
-            <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2, ml: 2, mr: 2, bgcolor: 'white'  }}>
+            </NewEventFormControl>
+            <NewEventFormControl>
                 <TextField type='date' variant='outlined' name='date' value={newEvent.date} onChange={handleChange} />
-            </FormControl>
+            </NewEventFormControl>
             <FormControl sx={{ minWidth: 100, mt: 4 }}>
                 <Button type="submit" variant="contained" color="secondary" size="large" onClick={handleSubmit} >{isLoading ? 'Loading...' : 'Save Event'}</Button>
             </FormControl>
