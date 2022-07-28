@@ -19,7 +19,7 @@ const Home = ({onSetSelectedEvent, events, today}) => {
     fetch('/events/last_five')
     .then(res => res.json())
     .then(events => {setLastEvents(events); setLoading(false)})
-  } , [])  
+  } , [user])  
 
   if (!user) return <Typography variant="h3" m={15}>Please login</Typography>
 

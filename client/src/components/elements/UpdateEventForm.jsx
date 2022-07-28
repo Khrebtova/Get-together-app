@@ -1,7 +1,7 @@
 import React , { useState } from 'react'
 import { headers } from '../../Globals'
 import { styled } from '@mui/material/styles';
-import {Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, Typography} from '@mui/material'
+import {Box, TextField, Button, Select, MenuItem, FormControl, Typography} from '@mui/material'
 
 const NewEventFormControl = styled(FormControl)({    
     minWidth: 100, 

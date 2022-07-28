@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
 
   # GET /comments/last_five
   def last_five
-    @comments = Comment.all.last(5)
+    @comments = Comment.all.order(:created_at).reverse.first(5)
     render json: @comments
   end
  

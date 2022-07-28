@@ -1,4 +1,4 @@
-import React , { useState, useContext }from 'react'
+import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { headers } from '../../Globals'
 import {UserContext} from '../context/user'
@@ -37,13 +37,12 @@ const Signup = () => {
           password: newUser.password,
           password_confirmation: newUser.passwordConfirmation
         }),
-      }).then((r) => { 
-        setIsLoading(false);          
+      }).then((r) => {                
         if (r.ok) {
-          r.json().then((createdUser) => {
-            setUser(createdUser)            
-            navigate('/')
-            setNewUser(defaultData)
+          r.json().then((user) => {
+            setIsLoading(false);  
+            setUser(user)            
+            navigate('/')            
           });
         } else {
           r.json().then((err) => setErrors(err.errors));
@@ -51,7 +50,7 @@ const Signup = () => {
       });
   }
   
-  if (user) return <h2>You already logged in {user.username}!</h2>
+  if (user) return <Typography variant="h3" m={15}>You are already logged in </Typography>
 
   return (
     <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 10, ml: 20, mr: 20}}>

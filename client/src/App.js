@@ -29,7 +29,7 @@ function App() {
     fetch('/categories')
     .then(r=>r.json())
     .then(categories => setCategories(categories))
-  }, [user])
+  }, [])
 
   const getTodayDate = () => {
     let today = new Date()

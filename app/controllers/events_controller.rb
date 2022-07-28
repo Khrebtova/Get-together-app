@@ -1,22 +1,29 @@
 class EventsController < ApplicationController
   before_action :authorize
 
-  before_action :set_event, only: %i[ show update destroy attend unattend ]
+  before_action :set_event, only: %i[ update destroy attend unattend ]
   
+  # GET /events/last_five
+  def last_five
+    @five_events = Event.all.order(:created_at).reverse.first(5)
+    render json: @five_events
+  end
+
   # GET /events
   def index
     @events = Event.all
     render json: @events
   end
 
+
   # GET /events/1
-  def show
-    if @event
-      render json: @event
-    else
-      render json: { error: 'Event not found' }, status: 404
-    end
-  end
+  # def show
+  #   if @event
+  #     render json: @event
+  #   else
+  #     render json: { error: 'Event not found' }, status: 404
+  #   end
+  # end
 
   # POST /events
   def create

@@ -2,12 +2,13 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :users, only: [:create, :show, :index]
   resources :categories, only: [:index, :create]
-  resources :events
+  resources :events, only: [:index, :create, :update, :destroy]
   resources :comments, only: [:create, :destroy, :last_five]
   resources :participations, only: [:create, :destroy]
   
   post '/events/:id/attend/:user_id', to: 'events#attend'
-  delete '/events/:id/unattend/:user_id', to: 'events#unattend'
+  delete '/events/:id/unattend/:user_id', to: 'events#unattend' 
+  get '/events/last_five', to: 'events#last_five'
 
   delete '/participations/:event_id/:user_id', to: 'participations#destroy'
 

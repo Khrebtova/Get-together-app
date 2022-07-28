@@ -30,7 +30,7 @@ const Login = () => {
         });
     }
 
-    if (user) return <h2>You already logged in {user.username}!</h2>
+    if (user) return <Typography variant="h3" m={15}>You're already logged in {user.username}!</Typography>
    
     return (
         <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 10, ml: 20, mr: 20}}>

@@ -12,7 +12,8 @@ const UserProvider = ({children}) => {
         fetch("/me").then((r) => {
           if (r.ok) {
             r.json().then((data) => {
-              setUser(data)                       
+              setUser(data)
+              console.log(data.username, "is logged in")                       
             });
           }else{
             console.log("user is not loggedin")
