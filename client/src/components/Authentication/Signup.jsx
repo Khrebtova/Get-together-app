@@ -40,8 +40,8 @@ const Signup = () => {
       }).then((r) => {                
         if (r.ok) {
           r.json().then((user) => {
-            setIsLoading(false);  
             setUser(user)            
+            setIsLoading(false);  
             navigate('/')            
           });
         } else {

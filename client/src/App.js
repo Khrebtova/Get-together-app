@@ -22,14 +22,16 @@ function App() {
   const [editEvent, setEditEvent] = useState(false)
   
   useEffect(() => {
-    fetch('/events')
-    .then(r=>r.json())
-    .then(events => setEvents(events))
-
-    fetch('/categories')
-    .then(r=>r.json())
-    .then(categories => setCategories(categories))
-  }, [])
+    if(user){
+      fetch('/events')
+      .then(r=>r.json())
+      .then(events => setEvents(events))
+  
+      fetch('/categories')
+      .then(r=>r.json())
+      .then(categories => setCategories(categories))
+    }
+  }, [user])
 
   const getTodayDate = () => {
     let today = new Date()
