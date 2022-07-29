@@ -1,4 +1,4 @@
-class EventsController < ApplicationController
+class Api::EventsController < ApplicationController
   before_action :authorize
 
   before_action :set_event, only: %i[ update destroy attend unattend ]

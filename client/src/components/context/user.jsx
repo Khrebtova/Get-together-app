@@ -9,7 +9,7 @@ const UserProvider = ({children}) => {
      
       useEffect(() => {
         document.title = 'Get together';
-        fetch("/me").then((r) => {
+        fetch("/api/me").then((r) => {
           if (r.ok) {
             r.json().then((data) => {
               setUser(data)

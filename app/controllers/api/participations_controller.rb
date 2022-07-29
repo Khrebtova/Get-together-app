@@ -1,4 +1,4 @@
-class ParticipationsController < ApplicationController
+class Api::ParticipationsController < ApplicationController
   before_action :authorize
 
   # POST /participations

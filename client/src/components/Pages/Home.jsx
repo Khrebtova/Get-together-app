@@ -12,11 +12,11 @@ const Home = ({onSetSelectedEvent, events, today}) => {
   const [lastEvents, setLastEvents] = useState([])
   
   useEffect(() => {    
-    fetch('/comments/last_five')
+    fetch('/api/comments/last_five')
     .then(res => res.json())
     .then(comments => setLastComments(comments))
 
-    fetch('/events/last_five')
+    fetch('/api/events/last_five')
     .then(res => res.json())
     .then(events => {setLastEvents(events); setLoading(false)})
   } , [user])  

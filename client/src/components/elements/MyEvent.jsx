@@ -16,7 +16,7 @@ const MyEvent = ({event, user, onUpdateEvents, onDeleteEvent, onSetSelectedEvent
 
   const handleSubmitComment = (e) => {
     e.preventDefault()
-    fetch('/comments', {
+    fetch('/api/comments', {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -33,7 +33,7 @@ const MyEvent = ({event, user, onUpdateEvents, onDeleteEvent, onSetSelectedEvent
   }
 
   const handleDeleteComment = (id) => {
-    fetch(`/comments/${id}`, {
+    fetch(`/api/comments/${id}`, {
       method: 'DELETE'
     })
     .then(res => res.json())

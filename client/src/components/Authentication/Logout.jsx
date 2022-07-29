@@ -12,7 +12,7 @@ const Logout = ({onSetSelectedEvent}) => {
     } , [onSetSelectedEvent])
     
     const handleLogout = () => {        
-        fetch('/logout', {
+        fetch('/api/logout', {
             method: "DELETE"
         })
         .then(() => {            

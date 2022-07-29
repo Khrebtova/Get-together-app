@@ -13,7 +13,7 @@ const Login = () => {
         
     const handleSubmit = (e) => {
         e.preventDefault();        
-        fetch("/login", {
+        fetch("/api/login", {
             method: "POST",
             headers,
             body: JSON.stringify({ username, password }),

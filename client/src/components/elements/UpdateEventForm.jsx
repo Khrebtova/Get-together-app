@@ -62,7 +62,7 @@ const UpdateEventForm = ({event, categories, onUpdateEvents, onSetSelectedEvent,
                 date: editedEvent.date,
             }}        
         
-        fetch(`/events/${event.id}`, {
+        fetch(`/api/events/${event.id}`, {
             method: 'PATCH',
             headers,
             body: JSON.stringify(strongParams)

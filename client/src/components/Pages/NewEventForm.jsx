@@ -36,10 +36,7 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
     if (!user) return <Typography variant="h3" m={15}>Please login</Typography>
 
     const handleChange = (e) => {
-        setNewEvent({
-            ...newEvent,
-            [e.target.name]: e.target.value
-        })
+        setNewEvent({...newEvent, [e.target.name]: e.target.value})
     }
 
     const handleNewCategoryEnter = (e) => {
@@ -57,7 +54,6 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log("submitting", {newEvent})
         setIsLoading(true)
         let strongParams;
         if (isNewCategory) {
@@ -78,7 +74,7 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
                 date: newEvent.date,
             }}        
         console.log(strongParams)
-        fetch('/events', {
+        fetch('/api/events', {
             method: 'POST',
             headers,
             body: JSON.stringify(strongParams)
@@ -87,8 +83,7 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
             setIsLoading(false)
             if (res.ok) {
                 res.json().then(event => {                    
-                    onAddEvent(event)
-                    console.log("event added")
+                    onAddEvent(event)                    
                     onAddCategory(event.category)
                     navigate('/myevents')
                 })

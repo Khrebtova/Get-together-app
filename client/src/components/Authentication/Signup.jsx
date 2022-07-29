@@ -29,7 +29,7 @@ const Signup = () => {
       setErrors([]);
       setIsLoading(true);      
       
-      fetch("/signup", {
+      fetch("/api/signup", {
         method: "POST",
         headers,
         body: JSON.stringify({

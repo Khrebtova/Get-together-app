@@ -31,7 +31,7 @@ const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDelete
   }  
 
   const handleClickAttend = () => {    
-    fetch(`/events/${event.id}/attend/${user.id}`, {
+    fetch(`/api/events/${event.id}/attend/${user.id}`, {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -46,7 +46,7 @@ const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDelete
 
   const handleClickUnattend = () => {
     console.log(user.username, "can't go to ", event.name)
-    fetch(`/events/${event.id}/unattend/${user.id}`, {
+    fetch(`/api/events/${event.id}/unattend/${user.id}`, {
       method: 'DELETE'
     })
     .then(r => r.json())
@@ -72,7 +72,7 @@ const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDelete
 
   const handleSubmitComment = (e) => {
     e.preventDefault()
-    fetch('/comments', {
+    fetch('/api/comments', {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -89,7 +89,7 @@ const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDelete
   }
 
   const handleDeleteComment = (id) => {
-    fetch(`/comments/${id}`, {
+    fetch(`/api/comments/${id}`, {
       method: 'DELETE'
     })
     .then(res => res.json())
@@ -110,6 +110,7 @@ const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDelete
       return <p>No comments yet</p>
     }
   }
+  
   return (
     <Card variant='outlined'  sx={{ width: 400, m: 2}}>
       <CardContent >

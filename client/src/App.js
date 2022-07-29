@@ -23,11 +23,11 @@ function App() {
   
   useEffect(() => {
     if(user){
-      fetch('/events')
+      fetch('/api/events')
       .then(r=>r.json())
       .then(events => setEvents(events))
   
-      fetch('/categories')
+      fetch('/api/categories')
       .then(r=>r.json())
       .then(categories => setCategories(categories))
     }

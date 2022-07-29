@@ -13,7 +13,7 @@ const EventPage = ({event, today, onSetSelectedEvent, onUpdateEvents, onDeleteEv
   const eventHappened = event.date < today;
 
   const handleClickAttend = () => {    
-    fetch(`/events/${event.id}/attend/${user.id}`, {
+    fetch(`/api/events/${event.id}/attend/${user.id}`, {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -31,7 +31,7 @@ const EventPage = ({event, today, onSetSelectedEvent, onUpdateEvents, onDeleteEv
 
   const handleClickUnattend = () => {
     console.log(user.username, "can't go to ", event.name)
-    fetch(`/events/${event.id}/unattend/${user.id}`, {
+    fetch(`/api/events/${event.id}/unattend/${user.id}`, {
       method: 'DELETE'
     })
     .then(r => r.json())
@@ -43,7 +43,7 @@ const EventPage = ({event, today, onSetSelectedEvent, onUpdateEvents, onDeleteEv
   
   const handleSubmitComment = (e) => {
     e.preventDefault()
-    fetch('/comments', {
+    fetch('/api/comments', {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -61,7 +61,7 @@ const EventPage = ({event, today, onSetSelectedEvent, onUpdateEvents, onDeleteEv
   }
 
   const handleDeleteComment = (id) => {
-    fetch(`/comments/${id}`, {
+    fetch(`/api/comments/${id}`, {
       method: 'DELETE'
     })
     .then(res => res.json())
