@@ -1,4 +1,5 @@
 class Api::ParticipationsController < ApplicationController
+  before_action :authorize
   # POST /participations
   def create
     @participation = Participation.create(participation_params)
@@ -21,8 +22,10 @@ class Api::ParticipationsController < ApplicationController
   end
 
   private
-  
-  
+    def authorize
+      render json: {errors: ["Unauthorized"]}, status: :unauthorized unless session.include? :user_id
+    end
+    
     # Only allow a list of trusted parameters through.
     def participation_params
       params.require(:participation).permit(:event_id, :user_id)

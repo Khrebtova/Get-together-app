@@ -1,4 +1,5 @@
 class Api::EventsController < ApplicationController
+  before_action :authorize
   before_action :set_event, only: %i[ update destroy attend unattend ]
   
   # GET /events/last_five
@@ -63,5 +64,9 @@ class Api::EventsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def event_params
       params.require(:event).permit(:name, :description, :location, :date, :category_id, :user_id, category_attributes: [ :name ])
-    end    
+    end
+    
+    def authorize
+      render json: {errors: ["Unauthorized"]}, status: :unauthorized unless session.include? :user_id
+    end
 end

@@ -1,5 +1,5 @@
 class Api::CategoriesController < ApplicationController
- 
+ before_action :authorize
   # GET /categories
   def index
     @categories = Category.all
@@ -23,5 +23,8 @@ class Api::CategoriesController < ApplicationController
       params.require(:category).permit(:name)
     end
 
+    def authorize
+      render json: {errors: ["Unauthorized"]}, status: :unauthorized unless session.include? :user_id
+    end
     
 end
