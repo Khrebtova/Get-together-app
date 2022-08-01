@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 import {UserContext} from './components/context/user'
 import NavBar from './components/Navigation/NavBar';
@@ -71,26 +71,25 @@ function App() {
     const categoryExist = categories.filter(category => category.id === newCategory.id)
     if (!categoryExist){
       setCategories([...categories, newCategory])
-    }
-    
+    }    
   }
+
+  if (!user) return <Login />
   
   return (    
-    <div >      
-        <Router>          
-          <NavBar />
-          {editEvent ? <UpdateEventForm event={selectedEvent} categories={categories} onAddCategory={addCategory} onUpdateEvents={updateEvents} setEditEvent={setEditEvent} onSetSelectedEvent={setSelectedEvent}/> : null}
-          {selectedEvent && !editEvent ? <EventPage event={selectedEvent} today={today} setEditEvent={setEditEvent} onSetSelectedEvent={setSelectedEvent} onDeleteEvent={deleteEvent} onUpdateEvents={updateEvents}/> : null}
-          <Routes>
-            <Route path="/" element={<Home onSetSelectedEvent={setSelectedEvent} events={events} today={today}/>} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/logout" element={<Logout onSetSelectedEvent={setSelectedEvent} />} />
-            <Route path="/my-events" element={<MyEvents events={events} today={today} onDeleteEvent={deleteEvent} onUpdateEvents={updateEvents} onSetSelectedEvent={setSelectedEvent} setEditEvent={setEditEvent}/>} />
-            <Route path="/events" element ={<EventBrowser events={events} today={today} onUpdateEvents={updateEvents} categories={categories} onSetSelectedEvent={setSelectedEvent} />} /> 
-            <Route path="/events/new" element={<NewEventForm categories={categories} onAddEvent={addEvent} onAddCategory={addCategory} onSetSelectedEvent={setSelectedEvent}/>} /> 
-          </Routes>
-        </Router>     
+    <div >
+      <NavBar />
+      {editEvent ? <UpdateEventForm event={selectedEvent} categories={categories} onAddCategory={addCategory} onUpdateEvents={updateEvents} setEditEvent={setEditEvent} onSetSelectedEvent={setSelectedEvent}/> : null}
+      {selectedEvent && !editEvent ? <EventPage event={selectedEvent} today={today} setEditEvent={setEditEvent} onSetSelectedEvent={setSelectedEvent} onDeleteEvent={deleteEvent} onUpdateEvents={updateEvents}/> : null}
+      <Routes>
+        <Route path="/" element={<Home onSetSelectedEvent={setSelectedEvent} events={events} today={today}/>} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout onSetSelectedEvent={setSelectedEvent} />} />
+        <Route path="/my-events" element={<MyEvents events={events} today={today} onDeleteEvent={deleteEvent} onUpdateEvents={updateEvents} onSetSelectedEvent={setSelectedEvent} setEditEvent={setEditEvent}/>} />
+        <Route path="/events" element ={<EventBrowser events={events} today={today} onUpdateEvents={updateEvents} categories={categories} onSetSelectedEvent={setSelectedEvent} />} /> 
+        <Route path="/events/new" element={<NewEventForm categories={categories} onAddEvent={addEvent} onAddCategory={addCategory} onSetSelectedEvent={setSelectedEvent}/>} /> 
+      </Routes>        
     </div>
     
   );
