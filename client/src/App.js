@@ -74,8 +74,6 @@ function App() {
     }    
   }
 
-  if (!user) return <Login />
-  
   return (    
     <div >
       <NavBar />

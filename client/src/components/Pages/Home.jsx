@@ -4,7 +4,7 @@ import { Box, Typography, Divider, Paper} from '@mui/material'
 
 const Home = ({onSetSelectedEvent, events, today}) => {
   const {user} = useContext(UserContext)
-  
+ 
   const [loading, setLoading] = useState(true)
   const [lastComments, setLastComments] = useState([])
   const [lastEvents, setLastEvents] = useState([])
@@ -19,7 +19,7 @@ const Home = ({onSetSelectedEvent, events, today}) => {
     .then(events => {setLastEvents(events); setLoading(false)})
   } , [user])  
 
-  if (!user) return <Typography variant="h3" m={15}>Please login</Typography>
+  if (!user) return <Typography variant="h4" m={15} >Please <a href="/login">Login</a></Typography>
 
   const handleSelectEvent = (id) => {    
     const event = events.find(event => event.id === id)

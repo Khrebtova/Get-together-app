@@ -12,14 +12,13 @@ const EventBrowser = ({events, today, onUpdateEvents, categories, onSetSelectedE
     onSetSelectedEvent(null)
   } , [onSetSelectedEvent]) 
   
-  if (!user) return <Typography variant="h3" m={15}>Please login</Typography>
+  if (!user) return <Typography variant="h4" m={15}>Please <a href="/login">Login</a></Typography>
 
   const eventList = events
   .filter(event => event.host.id !== user.id)
   .filter(event => categoryFilter === '' || event.category.id === parseInt(categoryFilter))
   .filter(event => event.name.toLowerCase().includes(search) || event.host.username.toLowerCase().includes(search))
   
-
   const displayEvents =  eventList.map(event => <Event key={event.id} event={event} user={user} onUpdateEvents={onUpdateEvents} onSetSelectedEvent={onSetSelectedEvent} today={today}/>)
   
   const handleResetFilters = () => {

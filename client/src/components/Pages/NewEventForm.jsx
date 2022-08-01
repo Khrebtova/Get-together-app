@@ -33,7 +33,7 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
         onSetSelectedEvent(null)
       } , [onSetSelectedEvent])
     
-    if (!user) return <Typography variant="h3" m={15}>Please login</Typography>
+    if (!user) return <Typography variant="h4" m={15} onClick={()=>navigate('/login')}>Please <a href="/login">Login</a></Typography>
 
     const handleChange = (e) => {
         setNewEvent({...newEvent, [e.target.name]: e.target.value})

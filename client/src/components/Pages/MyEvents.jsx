@@ -11,7 +11,7 @@ const MyEvents = ({events, onUpdateEvents, onSetSelectedEvent, onDeleteEvent, se
     onSetSelectedEvent(null)
   } , [onSetSelectedEvent])
 
-  if (!user) return <Typography variant="h3" m={15}>Please login</Typography>
+  if (!user) return <Typography variant="h4" m={15} >Please <a href="/login">Login</a></Typography>
 
   const hostingEvents = events.filter(event => event.host.id === user.id)
   const attendingEvents = events.filter(event => event.guests.map(guest=>guest.id).includes(user.id))
