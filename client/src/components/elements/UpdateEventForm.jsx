@@ -83,8 +83,8 @@ const UpdateEventForm = ({event, categories, onUpdateEvents, onSetSelectedEvent,
 
 
   return (
-    <Box mt={9} sx={{width: '100%', display: 'flex', position: 'relative', flexDirection: 'column', bgcolor: '#dddedf'}}>
-        <NewEventFormControl>                      
+    <Box sx={{width: '100%', display: 'flex', position: 'fixed', zIndex: 'modal', flexDirection: 'column', bgcolor: '#dddedf'}}>
+        <NewEventFormControl sx={{mt: 4}}>                      
             <TextField variant='outlined' size="small" name='name' value={editedEvent.name} onChange={handleChange} placeholder="Name"/>
         </NewEventFormControl>
         <NewEventFormControl>                
@@ -104,7 +104,7 @@ const UpdateEventForm = ({event, categories, onUpdateEvents, onSetSelectedEvent,
         <NewEventFormControl>
             <TextField type='date' size="small" variant='outlined' name='date' value={editedEvent.date} onChange={handleChange} />
         </NewEventFormControl>        
-        <FormControl sx={{ minWidth: 100, mt: 4, flexDirection: 'row', justifyContent: 'space-around' }}>
+        <FormControl sx={{ minWidth: 100, mt: 2, mb: 2, flexDirection: 'row', justifyContent: 'space-around' }}>
             <Button variant="contained" color="error" mb={2} mt={2} onClick={() => {setEditEvent(false); onSetSelectedEvent(null)}}> CANCEL </Button>
             <Button type="submit" variant="contained" color="success" size="large" onClick={handleSubmit} >{isLoading ? 'Loading...' : 'Save Changes'}</Button>
         </FormControl>

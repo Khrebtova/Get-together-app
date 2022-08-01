@@ -118,7 +118,7 @@ const EventPage = ({event, today, onSetSelectedEvent, onUpdateEvents, onDeleteEv
     )}
   
   return (
-    <Box mt={9} sx={{width: '100%', display: 'flex', position: 'relative', flexDirection: 'column', bgcolor: '#dddedf'}}>
+    <Box sx={{width: '100%', display: 'flex', position: 'fixed', zIndex: 'modal', flexDirection: 'column', bgcolor: '#dddedf'}}>
       <Card variant='outlined'  sx={{ m: 2}}>
       <CardContent>
       {eventHappened ? <Typography color="error" gutterBottom> !!This event has already happened</Typography> : null}
