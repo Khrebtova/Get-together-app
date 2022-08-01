@@ -12,11 +12,8 @@ const UserProvider = ({children}) => {
         fetch("/api/me").then((r) => {
           if (r.ok) {
             r.json().then((data) => {
-              setUser(data)
-              console.log(data.username, "is logged in")                       
+              setUser(data)                   
             });
-          }else{
-            console.log("user is not loggedin")
           }
         });
       }, []);

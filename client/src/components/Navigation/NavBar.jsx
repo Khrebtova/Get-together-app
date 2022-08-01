@@ -1,20 +1,7 @@
 import React, { useContext } from 'react'
 import {useNavigate} from 'react-router-dom'
 import {UserContext} from '../context/user'
-// Material UI Components: 
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
-
-
+import {AppBar, Box, Toolbar, Typography, Button, Divider, MenuItem, Menu, Avatar, Tooltip, IconButton} from '@mui/material';
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -63,7 +50,7 @@ const Navbar = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={()=>{navigate('/myevents'); handleClose()}}>My Events</MenuItem>
+            <MenuItem onClick={()=>{navigate('/my-events'); handleClose()}}>My Events</MenuItem>
             <MenuItem onClick={()=> {navigate('/logout'); handleClose()}}>Logout</MenuItem>
           </Menu>
         </div>

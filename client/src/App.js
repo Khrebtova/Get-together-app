@@ -62,15 +62,17 @@ function App() {
   const deleteEvent = (id) => {
     const newList = events.filter(event => event.id !== id)
     setEvents(newList)
+    fetch(`/api/events/${id}`, {
+      method: 'DELETE'
+    })
   }
 
   const addCategory = (newCategory) => {
     const categoryExist = categories.filter(category => category.id === newCategory.id)
     if (!categoryExist){
       setCategories([...categories, newCategory])
-      console.log('added category')
     }
-    console.log('category already exists')
+    
   }
   
   return (    
@@ -84,7 +86,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout onSetSelectedEvent={setSelectedEvent} />} />
-            <Route path="/myevents" element={<MyEvents events={events} today={today} onDeleteEvent={deleteEvent} onUpdateEvents={updateEvents} onSetSelectedEvent={setSelectedEvent} setEditEvent={setEditEvent}/>} />
+            <Route path="/my-events" element={<MyEvents events={events} today={today} onDeleteEvent={deleteEvent} onUpdateEvents={updateEvents} onSetSelectedEvent={setSelectedEvent} setEditEvent={setEditEvent}/>} />
             <Route path="/events" element ={<EventBrowser events={events} today={today} onUpdateEvents={updateEvents} categories={categories} onSetSelectedEvent={setSelectedEvent} />} /> 
             <Route path="/events/new" element={<NewEventForm categories={categories} onAddEvent={addEvent} onAddCategory={addCategory} onSetSelectedEvent={setSelectedEvent}/>} /> 
           </Routes>

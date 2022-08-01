@@ -30,7 +30,6 @@ const EventPage = ({event, today, onSetSelectedEvent, onUpdateEvents, onDeleteEv
   }
 
   const handleClickUnattend = () => {
-    console.log(user.username, "can't go to ", event.name)
     fetch(`/api/events/${event.id}/unattend/${user.id}`, {
       method: 'DELETE'
     })

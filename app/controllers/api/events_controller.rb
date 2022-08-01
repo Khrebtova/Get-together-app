@@ -1,6 +1,4 @@
 class Api::EventsController < ApplicationController
-  before_action :authorize
-
   before_action :set_event, only: %i[ update destroy attend unattend ]
   
   # GET /events/last_five
@@ -15,21 +13,11 @@ class Api::EventsController < ApplicationController
     render json: @events
   end
 
-
-  # GET /events/1
-  # def show
-  #   if @event
-  #     render json: @event
-  #   else
-  #     render json: { error: 'Event not found' }, status: 404
-  #   end
-  # end
-
   # POST /events
   def create
     @event = Event.create(event_params)
     if @event.valid?
-      render json: @event, status: :created, location: @event
+      render json: @event, status: :created
     else
       render json: { errors: @event.errors.full_messages }, status: :unprocessable_entity
     end
@@ -75,10 +63,5 @@ class Api::EventsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def event_params
       params.require(:event).permit(:name, :description, :location, :date, :category_id, :user_id, category_attributes: [ :name ])
-    end
-
-    # authorize the user
-    def authorize
-      render json: {errors: ["Unauthorized"]}, status: :unauthorized unless session.include? :user_id
-    end
+    end    
 end

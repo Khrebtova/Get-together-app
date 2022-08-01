@@ -1,5 +1,4 @@
 class Api::CommentsController < ApplicationController
-  before_action :authorize
   before_action :set_comment, only: %i[ destroy ]
 
   # GET /comments/last_five
@@ -37,8 +36,5 @@ class Api::CommentsController < ApplicationController
       params.permit(:text, :user_id, :event_id)
     end
 
-    # authorize the user
-    def authorize
-      render json: {errors: ["Unauthorized"]}, status: :unauthorized unless session.include? :user_id
-    end
+    
 end

@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState} from 'react'
 import {UserContext} from '../context/user'
-
-
 import { Box, Typography, Divider, Paper} from '@mui/material'
 
 const Home = ({onSetSelectedEvent, events, today}) => {

@@ -73,7 +73,6 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
                 location: newEvent.location,
                 date: newEvent.date,
             }}        
-        console.log(strongParams)
         fetch('/api/events', {
             method: 'POST',
             headers,
@@ -85,7 +84,7 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
                 res.json().then(event => {                    
                     onAddEvent(event)                    
                     onAddCategory(event.category)
-                    navigate('/myevents')
+                    navigate('/my-events')
                 })
             }else{
                 res.json().then(err => setErrors(err.errors))

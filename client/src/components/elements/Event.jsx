@@ -1,7 +1,6 @@
 import React, { useState} from 'react'
 import {headers } from '../../Globals'
-import {Card, CardActions, CardContent, Button, Typography, Divider, Collapse, FormControl, TextField, IconButton }from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {Card, CardActions, CardContent, Button, Typography, Divider, Collapse, FormControl, TextField, IconButton, Icon }from '@mui/material';
 
 const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDeleteEvent}) => {
   
@@ -45,7 +44,6 @@ const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDelete
   }
 
   const handleClickUnattend = () => {
-    console.log(user.username, "can't go to ", event.name)
     fetch(`/api/events/${event.id}/unattend/${user.id}`, {
       method: 'DELETE'
     })
