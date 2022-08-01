@@ -1,24 +1,43 @@
-# README
+# Get Together app
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Always wanted to make an application to help me and my family and friends get together and have a great time. without hustle of messaging everyone separately.  
 
-Things you may want to cover:
+## Description
+I built this app with intention to implement and demonstrate full scope of the skills that I have acquired during Flatiron school Software engineering program.
+This app uses a Rails API and React frontend that can be deployed to a single domain. Both projects are contained in the same repository. All React code is in the `/client` directory.
 
-* Ruby version
+## Overview 
+In the Get Together app users will be able to:
+- create new profile;
+- login/logout;
+- stay logged in (unless clicked 'logout');
+- see all events created by other users(sort them by categories, or search my event name or host);
+- attend/unattend events created by other users;
+- leave comments for events, delete their oun comments;
+- create/delete/edit events;
+- on My-events page see events they created and events they attending;
 
-* System dependencies
+## Requirements
+- Ruby 2.7.4
+- NodeJS (v16), and npm
+- Postgresql
 
-* Configuration
+## Setup 
+Fork and clone this repository into your local environment. Navigate into its directory in the terminal, then run code . to open the files in Visual Studio Code.
+- run `bundle install`
+- run `rails db:create db:migrate `
+- run `npm install --prefix client`
 
-* Database creation
+You can use the following commands to run the application in your local environment:
+- `rails s` : run the backend on http://localhost:3000
+- `npm start --prefix client` : run the frontend on http://localhost:4000
 
-* Database initialization
+Or as well you can run this command to start the frontend and backend servers(configuration for running in development is in the `Procfile.dev` file):
 
-* How to run the test suite
+```sh
+heroku local -f Procfile.dev
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+## See deployed application 
 
-* Deployment instructions
-
-* ...
+https://get-together-project-2022.herokuapp.com/
