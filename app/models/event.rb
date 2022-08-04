@@ -9,6 +9,5 @@ class Event < ApplicationRecord
 
   has_many :comments, dependent: :destroy
   
-  accepts_nested_attributes_for :category
-  # accepts_nested_attributes_for :participations
+  accepts_nested_attributes_for :category  
 end
