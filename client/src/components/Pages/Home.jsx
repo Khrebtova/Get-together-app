@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState} from 'react'
 import {UserContext} from '../context/user'
-import { Box, Typography, Divider, Paper} from '@mui/material'
+import { Box, Typography, Divider, Paper, Button} from '@mui/material'
 
 const Home = ({onSetSelectedEvent, events, today}) => {
   const {user} = useContext(UserContext)
@@ -27,19 +27,21 @@ const Home = ({onSetSelectedEvent, events, today}) => {
   }
 
   const renderLastComments =()=> {
-    return lastComments.map(comment =><Typography component="li" key={comment.id} onClick={()=>handleSelectEvent(comment.event.id)}>
-      {comment.user.username} said on '{comment.event.name}' : "{comment.text}"</Typography>
+    return lastComments.map(comment =>
+      <Typography component="li" key={comment.id} >
+        {comment.author} said on <Button size="small" onClick={()=>handleSelectEvent(comment.event.id)}>{comment.event.name}</Button> : "{comment.text}"
+      </Typography>
     )}
   
   const renderLastEvents = () => {      
-      return lastEvents.map(event =><Typography component="li" key={event.id} onClick={()=>onSetSelectedEvent(event)}>{event.name}, by {event.host.username}</Typography>)
+      return lastEvents.map(event =><Typography component="li" key={event.id}><Button size='small' onClick={()=>onSetSelectedEvent(event)}>{event.name}</Button>, by {event.host.username}</Typography>)
     }
 
   const renderTodayEvents = () => {
       const todayEvents = events.filter(event => event.date === today)
       if (todayEvents.length === 0) return <p>No events today</p>      
-      return todayEvents.map(event => <Typography key={event.id} component="li" onClick={()=>onSetSelectedEvent(event)}>{event.name}, by {event.host.username}</Typography>)
-  }     
+      return todayEvents.map(event => <li key={event.id}><Button onClick={()=>onSetSelectedEvent(event)}>{event.name}</Button></li>)
+    }     
 
   return (
     <Box sx={{display: 'flex' , flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 12, ml: 10, mr: 10}} >

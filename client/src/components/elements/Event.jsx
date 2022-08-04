@@ -1,6 +1,6 @@
 import React, { useState} from 'react'
 import {headers } from '../../Globals'
-import {Card, CardActions, CardContent, Button, Typography, Divider, Collapse, FormControl, TextField, IconButton, Icon }from '@mui/material';
+import {Card, CardActions, CardContent, Button, Typography, Divider, Collapse, FormControl, TextField, IconButton, Icon, Tooltip }from '@mui/material';
 
 const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDeleteEvent}) => {
   
@@ -116,9 +116,11 @@ const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDelete
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {event.category.name} event created by {event.host.username}
         </Typography>        
-        <Typography variant="h5" component="div" >
-          {event.name}
-        </Typography>
+        <Tooltip title='Click to see details'>
+          <Typography variant="h5" component="div" onClick={()=>onSetSelectedEvent(event)}>
+            {event.name}
+          </Typography>
+        </Tooltip>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {event.date}
         </Typography>

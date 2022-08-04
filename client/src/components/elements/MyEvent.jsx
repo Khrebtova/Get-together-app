@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Card, CardActions, CardContent, Button, Typography, Divider, Collapse, FormControl, TextField, IconButton, Icon }from '@mui/material';
+import {Card, CardActions, CardContent, Button, Typography, Divider, Collapse, FormControl, TextField, IconButton, Icon, Tooltip }from '@mui/material';
 import {headers } from '../../Globals'
 
 const MyEvent = ({event, user, onUpdateEvents, onDeleteEvent, onSetSelectedEvent, setEditEvent, today}) => {
@@ -67,15 +67,17 @@ const MyEvent = ({event, user, onUpdateEvents, onDeleteEvent, onSetSelectedEvent
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           Your {event.category.name} event 
         </Typography>
-        <Typography variant="h5" component="div">
-         {event.name}
-        </Typography>
+        <Tooltip title='Click to see details'>
+          <Typography variant="h5" component="div" onClick={()=>onSetSelectedEvent(event)}>
+            {event.name}
+          </Typography>
+        </Tooltip>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {event.date}
         </Typography>
         <Divider />
         <Typography variant="body1" component="p">
-          Going: {event.guest_count}
+          Going: {event.guests.length}
           <br />
           Comments: {event.comments.length}
         </Typography>              
