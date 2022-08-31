@@ -25,8 +25,7 @@ const EventPage = ({event, today, onSetSelectedEvent, onUpdateEvents, onDeleteEv
     .then(data => {
       onUpdateEvents(data)
       onSetSelectedEvent(data)
-    })
-    .catch(err => console.log(err.errors))    
+    })  
   }
 
   const handleClickUnattend = () => {
@@ -36,8 +35,8 @@ const EventPage = ({event, today, onSetSelectedEvent, onUpdateEvents, onDeleteEv
     .then(r => r.json())
     .then(data => {
       onUpdateEvents(data)
-      onSetSelectedEvent(data)})
-    .catch(err => console.log(err.errors))
+      onSetSelectedEvent(data)
+    })
   }
   
   const handleSubmitComment = (e) => {

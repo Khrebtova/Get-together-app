@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     post '/events/:id/attend/:user_id', to: 'events#attend'
     delete '/events/:id/unattend/:user_id', to: 'events#unattend' 
     get '/events/last_five', to: 'events#last_five'
-    delete '/participations/:event_id/:user_id', to: 'participations#destroy'
+    # delete '/participations/:event_id/:user_id', to: 'participations#destroy'
     get '/comments/last_five', to: 'comments#last_five'
     post '/signup', to: 'users#create'
     get '/me', to: 'users#show'

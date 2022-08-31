@@ -39,8 +39,7 @@ const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDelete
       })
     })
     .then(r => r.json())
-    .then(data => onUpdateEvents(data))
-    .catch(err => console.log(err.errors))    
+    .then(data => onUpdateEvents(data))        
   }
 
   const handleClickUnattend = () => {
@@ -49,7 +48,6 @@ const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDelete
     })
     .then(r => r.json())
     .then(data => onUpdateEvents(data))
-    .catch(err => console.log(err.errors))
   }
 
   const renderButtons = () => {
