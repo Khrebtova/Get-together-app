@@ -19,7 +19,7 @@ class Api::UsersController < ApplicationController
     else
         render json: {errors: ["Unauthorized"]}, status: :unauthorized
     end
-end
+  end
   
   private
  
