@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, Link} from 'react-router-dom'
 import {UserContext} from '../context/user'
-import {AppBar, Box, Toolbar, Typography, Button, Divider, MenuItem, Menu, Avatar, Tooltip, IconButton} from '@mui/material';
-
+import {AppBar, Typography, Button, Divider, MenuItem, Menu, Avatar, Tooltip, IconButton, Stack} from '@mui/material';
+import Logo from '../../assets/logo-white.jpg'
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const {user} = useContext(UserContext)
@@ -68,21 +68,20 @@ const Navbar = () => {
   }
 
   return (      
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" color='secondary'>
-        <Toolbar>       
-          <Typography 
-            variant="h4" component="div" 
-            sx={{ flexGrow: 1, mr: 2, fontFamily: 'monospace', fontWeight: 700, letterSpacing: '.3rem', color: 'inherit', textDecoration: 'none'}} 
+      <AppBar position="fixed" sx={{background: '#6D9886', height: '120px'}}>
+        <Stack direction="row" alignItems='center' p='20px' ml='40px' mr='40px'>       
+          <img src={Logo} alt="logo" className='logo' style={{height: '80px', borderRadius: '20px'}} onClick={()=>navigate('/')}/>
+          <Typography                         
+            sx={{ flexGrow: 1, mr: 2, ml: 2,  fontSize: {lg: '40px', sm: '30px'}, fontWeight: 700, letterSpacing: '.3rem', color: 'inherit'}} 
             onClick={()=>navigate('/')}
           >
-            LET'S GET TOGETHER
+            GET TOGETHER
           </Typography>
         <Divider/>     
         {user ? loggedInLinks() : loggedOutLinks()} 
-        </Toolbar>
+        </Stack>
       </AppBar>                
-    </Box>    
+       
   )
 }
 
