@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState} from 'react'
 import {UserContext} from '../context/user'
 import { Box, Typography, Divider, Paper, Button} from '@mui/material'
+import IMG from '../../assets/food-narrow.jpg'
+
 
 const Home = ({onSetSelectedEvent, events, today}) => {
-  const {user} = useContext(UserContext)
- 
+  const {user} = useContext(UserContext) 
   const [loading, setLoading] = useState(true)
   const [lastComments, setLastComments] = useState([])
   const [lastEvents, setLastEvents] = useState([])
@@ -29,51 +30,59 @@ const Home = ({onSetSelectedEvent, events, today}) => {
   const renderLastComments =()=> {
     return lastComments.map(comment =>
       <Typography component="li" key={comment.id} >
-        {comment.author} said on <Button size="small" onClick={()=>handleSelectEvent(comment.event.id)}>{comment.event.name}</Button> : "{comment.text}"
+        {comment.author} said on <Button color='success' size="small" onClick={()=>handleSelectEvent(comment.event.id)}>{comment.event.name}</Button> : "{comment.text}"
       </Typography>
     )}
   
   const renderLastEvents = () => {      
-      return lastEvents.map(event =><Typography component="li" key={event.id}><Button size='small' onClick={()=>onSetSelectedEvent(event)}>{event.name}</Button>, by {event.host.username}</Typography>)
+      return lastEvents.map(event =><Typography component="li" key={event.id} ><Button color='success' size='small' onClick={()=>onSetSelectedEvent(event)}>{event.name}</Button>, created by {event.host.username}</Typography>)
     }
 
   const renderTodayEvents = () => {
       const todayEvents = events.filter(event => event.date === today)
       if (todayEvents.length === 0) return <p>No events today</p>      
-      return todayEvents.map(event => <li key={event.id}><Button onClick={()=>onSetSelectedEvent(event)}>{event.name}</Button></li>)
+      return todayEvents.map(event => <li key={event.id}><Button color='success' onClick={()=>onSetSelectedEvent(event)}>{event.name}</Button></li>)
     }     
 
-  return (
-    <Box sx={{display: 'flex' , flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 12, ml: 10, mr: 10}} >
-      <Typography variant="h3">Welcome, {user.username}!</Typography>
-        <Divider />
-      <Box sx={{bgcolor: '#f3c460', mt: 5}}>
-        <Paper elevation={3}  sx={{ mt: 5, mr: 2, ml: 2}}>
-          <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', flexWrap: 'wrap', m: 2}}>
-            <Typography variant='h6'>Events happening today: </Typography>
-            <ul>
-              {renderTodayEvents()}
-            </ul>
-          </Box>
-        </Paper>
-        <Paper elevation={3}  sx={{ mt: 5, mr: 2, ml: 2}}>
-          <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', flexWrap: 'wrap', m: 2}}>
-          <Typography variant='h6'>Here some newest comments, if you missed: </Typography>
-          <ul>
-            {loading ? <Typography>Loading..</Typography> : renderLastComments()}
-          </ul>
-          </Box>
-        </Paper> 
-        <Paper elevation={3}  sx={{ mt: 5, mr: 2, ml: 2}}>
-          <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', m: 2}}>
-          <Typography variant='h6'>Here some newest events, if you missed: </Typography>
-          <ul>
-            {loading ? <Typography>Loading..</Typography> : renderLastEvents()}
-          </ul>   
-          </Box>
-        </Paper>
-        </Box>      
-    </Box>
+  return (        
+      <Box className='homepage'>
+        {/* <Typography variant="h4" fontWeight='bold' textTransform='capitalize'>
+          Welcome, {user.username}!
+        </Typography>
+        <Divider sx={{color: '#6D9886', height: '15px'}} /> */}
+        {/* <img src={IMG} alt="food" className='homepage-img'/> */}
+        {/* <Box sx={{display: 'flex', flexDirection: {lg: 'row', md: 'column', sm: 'column', xs: 'column'}, justifyContent: 'center'}}> */}
+        <Box sx={{display: 'grid', gridTemplateColumns: {lg: '1fr 1fr 1fr', md: '1fr 1fr 1fr', sm: '1fr'}, justifyContent: 'center'}}>
+          <Paper elevation={10}  sx={{ mt: 5, mr: 2, ml: 2}}>
+            <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', flexWrap: 'wrap', m: 2}}>
+              <Typography variant='h6'>Events happening today: </Typography>
+              <Divider sx={{color: '#6D9886', m: '15px 0'}}/>
+              <ul>
+                {renderTodayEvents()}
+              </ul>
+            </Box>
+          </Paper>
+          <Paper elevation={10}  sx={{ mt: 5, mr: 2, ml: 2}}>
+            <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', flexWrap: 'wrap', m: 2}}>
+              <Typography variant='h6'>New comments: </Typography>
+              <Divider sx={{color: '#6D9886', m: '15px 0'}}/>
+              <ul>
+                {loading ? <Typography>Loading..</Typography> : renderLastComments()}
+              </ul>
+            </Box>
+          </Paper> 
+          <Paper elevation={10}  sx={{ mt: 5, mr: 2, ml: 2}}>
+            <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', m: 2}}>
+              <Typography variant='h6'>New events: </Typography>
+              <Divider sx={{color: '#6D9886', m: '15px 0'}}/>
+              <ul>
+                {loading ? <Typography>Loading..</Typography> : renderLastEvents()}
+              </ul>   
+            </Box>
+          </Paper>
+          </Box>      
+      </Box>
+    
   )
 }
 
