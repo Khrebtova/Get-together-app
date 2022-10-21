@@ -3,6 +3,7 @@ import {useNavigate, Link} from 'react-router-dom'
 import {UserContext} from '../context/user'
 import {AppBar, Typography, Button, Divider, MenuItem, Menu, Avatar, Tooltip, IconButton, Stack} from '@mui/material';
 import Logo from '../../assets/logo-white.jpg'
+
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const {user} = useContext(UserContext)

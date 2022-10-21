@@ -38,10 +38,13 @@ body{
 
 /*  ----------------- media queries (medium devices) --------------------*/
 @media screen and (max-width: 1024px) {
-
+  
+  
 }
 
 /*  ----------------- media queries (small devices) --------------------*/
 @media screen and (max-width: 600px) {
-  
+  .login-img{
+    display: none;
+  }
 }

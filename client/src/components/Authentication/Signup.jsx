@@ -2,7 +2,9 @@ import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { headers } from '../../Globals'
 import {UserContext} from '../context/user'
-import { Box, TextField, Button, FormControl, Typography, Divider } from '@mui/material'
+import { Box, TextField, Typography, Stack } from '@mui/material'
+import IMG from '../../assets/sunset-square.jpg'
+import { LoginButton, LoginForm, LoginBox, InputField } from './Styles'
 
 const Signup = () => {
   const {user, setUser} = useContext(UserContext)
@@ -53,30 +55,35 @@ const Signup = () => {
   if (user) return <Typography variant="h3" m={15}>You are already logged in </Typography>
 
   return (
-    <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 10, ml: 20, mr: 20}}>
-      <Typography variant="h3" mb={2} mt={2} >
-        Create New Account: 
-      </Typography>
-      <Divider />
-
-      <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>                
-        <TextField variant='outlined' name='username' onChange={handleChange} placeholder="Username"/>
-      </FormControl>
-      <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>
-        <TextField variant='outlined' type='password' name='password'  onChange={handleChange} placeholder="Password" />
-      </FormControl>
-      <FormControl variant="outlined" sx={{ minWidth: 100, mt: 2 }}>
-        <TextField variant='outlined' type='password' name='passwordConfirmation' onChange={handleChange} placeholder="Confirm password" />      
-      </FormControl>
-      {errors.map((err, i) => <Typography key={i} variant="body1" mb={2} mt={2} color="error" >{err}</Typography>)}
-      <FormControl sx={{ minWidth: 100, mt: 4 }}>
-        <Button variant="contained" color="secondary" onClick={handleSubmit}> {isLoading ? "Loading..." : "Sign Up"}</Button>
-      </FormControl>
-      <Divider />
-      <Typography variant="body1" mb={2} mt={2}>
-        Already have an account? <a href="/login">Login</a>
-      </Typography>
-    </Box>
+    <Stack sx={{flexDirection: {sm: 'column', lg: 'row', md: 'row'}}} className='authentication-page' mt='120px'>
+      <LoginBox >
+        <Typography variant="h5" mb={2} mt={2} >
+          Create New Account: 
+        </Typography>
+        
+        <LoginForm >                
+          <TextField variant='outlined' color='success' name='username' onChange={handleChange} placeholder="Username"/>
+        </LoginForm>
+        <LoginForm >
+          <TextField variant='outlined' color="success" type='password' name='password'  onChange={handleChange} placeholder="Password" />
+        </LoginForm>
+        <LoginForm >
+          <TextField variant='outlined' color="success" type='password' name='passwordConfirmation' onChange={handleChange} placeholder="Confirm password" />      
+        </LoginForm>
+        {errors.map((err, i) => <Typography key={i} variant="body1" mb={2} mt={2} color="error" >{err}</Typography>)}
+        <LoginForm >
+          <LoginButton variant="contained" onClick={handleSubmit}> {isLoading ? "Loading..." : "Sign Up"}</LoginButton>
+        </LoginForm>
+        
+        <Typography variant="body1" mb={2} mt={2}>
+          Already have an account? <a href="/login">Login</a>
+        </Typography>
+      </LoginBox>
+      <Box p='0 30px' className='login-img'>
+        <img src={IMG} alt="high-five"  />
+        <p>Photo by <a href="https://unsplash.com/@nixcreative?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Tyler Nix</a> on <a href="https://unsplash.com/s/photos/friends?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>            
+      </Box>
+    </Stack>
   )
 }
 
