@@ -34,17 +34,37 @@ body{
   transition: 'smooth';
 }
 
+.login-img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
+.img-label{
+  color: #6D9886;
+  font-size: small;
+}
+
+.img-label a{
+  color: #6D9886;
+  font-size: small;
+}
 
 /*  ----------------- media queries (medium devices) --------------------*/
 @media screen and (max-width: 1024px) {
-  
+  .login-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   
 }
 
 /*  ----------------- media queries (small devices) --------------------*/
 @media screen and (max-width: 600px) {
-  .login-img{
-    display: none;
+  .login-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }

@@ -2,7 +2,7 @@ import React , { useState, useContext } from 'react'
 import {UserContext} from '../context/user'
 import { useNavigate } from 'react-router-dom'
 import { headers } from '../../Globals'
-import { Box, TextField, Typography, Divider, Stack } from '@mui/material'
+import { Box, TextField, Typography, Stack } from '@mui/material'
 import IMG from '../../assets/ocean-square.jpg'
 import { LoginButton, LoginForm, LoginBox } from './Styles'
 
@@ -56,8 +56,8 @@ const Login = () => {
                 </Typography>
             </LoginBox>            
             <Box p='0 30px' className='login-img'>
-                <img src={IMG} alt="hiking" />
-                <p >Photo by <a href="https://unsplash.com/@von_co?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ivana Cajina</a> on <a href="https://unsplash.com/s/photos/friends?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>            
+                <img src={IMG} alt="high-five" />
+                <p className='img-label'>Photo by <a href="https://unsplash.com/@von_co?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ivana Cajina</a> on <a href="https://unsplash.com/s/photos/friends?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>            
             </Box>
         </Stack>
   )

@@ -1,7 +1,9 @@
 import React , {useContext, useEffect}from 'react'
 import { useNavigate } from 'react-router-dom'
 import {UserContext} from '../context/user'
-import { Box, Button, Typography, Divider } from '@mui/material'
+import { Box, Typography, Stack } from '@mui/material'
+import IMG from '../../assets/hike-horisontal.jpg'
+import { LoginButton, LoginBox, LogoutButton} from './Styles'
 
 const Logout = ({onSetSelectedEvent}) => {
     const {user, setUser} = useContext(UserContext)
@@ -25,14 +27,20 @@ const Logout = ({onSetSelectedEvent}) => {
     if (!user) return <h2>You are not logged in</h2>
     
     return (
-        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 10, ml: 20, mr: 20}}>
-            <Typography variant="h3" mb={2} mt={2} >
-                Loging out, {user.username} ?
-            </Typography>
-            <Divider />
-            <Button  color="success" variant="outlined" size='large' sx={{mt: 4, mb: 4}}  onClick={handleLogout}>YES! Log out</Button>
-            <Button  color='error' variant='outlined' size='large' onClick={() => navigate('/')}>NO! Stay logged in</Button>
-        </Box>
+        <Stack sx={{flexDirection: {sm: 'column', lg: 'row', md: 'column'}}} className='authentication-page' mt='120px'>
+            <LoginBox >
+                <Typography variant="h5" mb={2} mt={2} >
+                    Bye Bye, {user.username} !
+                </Typography>
+                
+                <LogoutButton variant="contained"  onClick={handleLogout}>Log out</LogoutButton>
+                <LoginButton variant='contained' onClick={() => navigate('/')}>Stay logged in</LoginButton>
+            </LoginBox>            
+            <Box p='0 30px' className='login-img' >
+                <img src={IMG} alt="hiking" />
+                <p className='img-label'>Photo by <a href="https://unsplash.com/@hollymandarich?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Holly Mandarich</a> on <a href="https://unsplash.com/s/photos/hike?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>            
+            </Box>
+        </Stack>
     )
 }
 
