@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../context/user'
 import { styled } from '@mui/material/styles';
 import { Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, Typography, Divider } from '@mui/material'
+import { LoginBox , LoginForm, LoginButton, TextInput } from '../Authentication/Styles';
 
 const NewEventFormControl = styled(FormControl)({    
     minWidth: 100, 
@@ -92,39 +93,45 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
     }
    
     return (   
-        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 10, ml: 20, mr: 20}}>
-            <Typography variant="h3" mb={2} mt={2} >
-                Create New Event 
-            </Typography>
-
-            <Divider />
-        
-            <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', bgcolor: '#dddedf'}}>
-            <NewEventFormControl >                
-                <TextField variant='outlined' name='name' value={newEvent.name} onChange={handleChange} placeholder="Name"/>
-            </NewEventFormControl>
-            <NewEventFormControl >                
-                <TextField variant='outlined' name='description' value={newEvent.description} onChange={handleChange} placeholder="Description" />
-            </NewEventFormControl>
-            <NewEventFormControl>
-                <InputLabel >Select Category</InputLabel>
-                <Select name="categoryId"  onChange={handleChange} disabled={isNewCategory} value={newEvent.categoryId}>                  
-                {categories.map(category => <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>)}
-                </Select>
-            </NewEventFormControl>
-            <NewEventFormControl>
-                <TextField variant='outlined' name="newCategory" placeholder='enter new category here' onChange={handleNewCategoryEnter} />
-            </NewEventFormControl>         
-            <NewEventFormControl>
-                <TextField variant='outlined' name='location' value={newEvent.location} onChange={handleChange} placeholder="Location" />
-            </NewEventFormControl>
-            <NewEventFormControl>
-                <TextField type='date' variant='outlined' name='date' value={newEvent.date} onChange={handleChange} />
-            </NewEventFormControl>
-            <FormControl sx={{ minWidth: 100, mt: 4 }}>
-                <Button type="submit" variant="contained" color="secondary" size="large" onClick={handleSubmit} >{isLoading ? 'Loading...' : 'Save Event'}</Button>
-            </FormControl>
-            </Box>
+        <Box className='homepage'
+            mt='120px'            
+            sx={{
+                display: 'flex', 
+                flexDirection: 'column', 
+                justifyContent: 'center',
+                alignItems: 'center'
+            }} 
+        >        
+            <LoginBox bgcolor='#D9CAB3'>
+                <Typography variant="h4" fontWeight='bold' mb='10px'>
+                    Create New Event 
+                </Typography>
+                <Divider />
+                <LoginForm >                
+                    <TextField variant='outlined' color='success' name='name' value={newEvent.name} onChange={handleChange} placeholder="Name"/>
+                </LoginForm>
+                <LoginForm >                
+                    <TextField variant='outlined' color='success' name='description' value={newEvent.description} onChange={handleChange} placeholder="Description" />
+                </LoginForm>
+                <LoginForm>
+                    <InputLabel color='success'>Select Category</InputLabel>
+                    <Select name="categoryId"  color='success' onChange={handleChange} disabled={isNewCategory} value={newEvent.categoryId}>                  
+                    {categories.map(category => <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>)}
+                    </Select>
+                </LoginForm>
+                <LoginForm>
+                    <TextField variant='outlined' name="newCategory" color='success' placeholder='enter new category here' onChange={handleNewCategoryEnter} />
+                </LoginForm>         
+                <LoginForm>
+                    <TextField variant='outlined' color='success' name='location' value={newEvent.location} onChange={handleChange} placeholder="Location" />
+                </LoginForm>
+                <LoginForm>
+                    <TextField type='date' variant='outlined' color='success' name='date' value={newEvent.date} onChange={handleChange} />
+                </LoginForm>
+                <LoginForm sx={{ minWidth: 100, mt: 4 }}>
+                    <LoginButton type="submit" variant="contained" onClick={handleSubmit} >{isLoading ? 'Loading...' : 'Save Event'}</LoginButton>
+                </LoginForm>
+            </LoginBox>
             {errors ? errors.map(error => <Typography key={error} variant="body1" color="error">{error}</Typography>) : null}
         </Box>
     )
