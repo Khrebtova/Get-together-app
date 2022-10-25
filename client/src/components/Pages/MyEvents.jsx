@@ -2,11 +2,12 @@ import React, { useContext, useEffect} from 'react'
 import Event from '../elements/Event'
 import MyEvent from '../elements/MyEvent'
 import {UserContext} from '../context/user'
-import { Box, Typography, Divider} from '@mui/material'
+import { Box, Typography, Stack, Fab} from '@mui/material'
 
 const MyEvents = ({events, onUpdateEvents, onSetSelectedEvent, onDeleteEvent, setEditEvent, today}) => {
   const {user} = useContext(UserContext)
-    
+  const [displayHostingEvents, setDisplayHostingEvents] = React.useState(true)
+
   useEffect(() => {
     onSetSelectedEvent(null)
   } , [onSetSelectedEvent])
@@ -38,23 +39,45 @@ const MyEvents = ({events, onUpdateEvents, onSetSelectedEvent, onDeleteEvent, se
   
   return (
     <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: '120px', p: '40px'}}>
-      <Typography variant="h4" >
-          My Events
-      </Typography>
-      <Divider />
-      <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'stretch', mb: 1, mt: 2}}> 
+      
+      <Stack direction="row" justifyContent='center' spacing={2} sx={{mb: 2}}>
+        <Fab 
+          onClick={()=>setDisplayHostingEvents(true)} 
+          variant="extended" 
+          sx={{
+            width: '200px',
+            color: displayHostingEvents ? '#f6f6f6' : '#212121', 
+            bgcolor:  displayHostingEvents ? '#212121' : '',
+            '&:hover': {backgroundColor: '#83978f'}
+          }}
+        >
+          I'm Host
+        </Fab> 
+        <Fab 
+          onClick={()=>setDisplayHostingEvents(false)} 
+          variant="extended" 
+          sx={{
+            width: '200px',
+            color: displayHostingEvents ? '#212121' : '#f6f6f6', 
+            bgcolor:  displayHostingEvents ? '' : '#212121',
+            '&:hover': {backgroundColor: '#83978f'}
+        }}
+        >
+          I'm Guest
+        </Fab>
+      </Stack>
 
-            <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', m: 2, bgcolor: '#f3c460'}}>
-              <Typography variant='h5' mt={2}>Hosting, {hostingEvents.length} events</Typography>
-              {listEventsHosting}
-            </Box>
-            <Divider orientation="vertical" flexItem />
-            <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', m: 2, bgcolor: '#f3c460'}}>
-              <Typography variant='h5' mt={2}>Attending, {attendingEvents.length} events</Typography>
-              {listEventsAttending}
-            </Box>
-        
-        </Box>      
+      <Box 
+        sx={{
+          display: 'flex', 
+          flexDirection: 'row', 
+          justifyContent: 'center', 
+          flexWrap: 'wrap'
+        }}
+      >
+        {displayHostingEvents? listEventsHosting : listEventsAttending}
+      </Box>      
+      
     </Box>
   )
 }

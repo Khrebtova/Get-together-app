@@ -1,4 +1,4 @@
-import { Button, FormControl, Box, TextField} from '@mui/material'
+import { Button, FormControl, Box, TextField, Fab } from '@mui/material'
 import { styled } from '@mui/material/styles';
 
 export const LoginButton = styled(Button)({
@@ -32,16 +32,17 @@ export const LoginBox = styled(Box)({
 
 })
 
-export const EventButtonAttend = styled(Button)({
-    width: '150px',
+export const EventButtonGreen = styled(Button)({
+    maxWidth: '150px',
     backgroundColor: '#6D9886',
     color: '#F6F6F6',
     '&:hover': {backgroundColor: '#83978f'}
 })
 
-export const EventButtonCancel = styled(Button)({
+export const EventButtonBlack = styled(Button)({
     width: '150px',
     backgroundColor: '#212121',
     color: 'white',
     '&:hover': {backgroundColor: '#404040'}
 })
+

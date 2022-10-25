@@ -1,7 +1,8 @@
 import React, { useState} from 'react'
 import {headers } from '../../Globals'
 import {Card, CardActions, CardContent, Button, Typography, Divider, Collapse, FormControl, TextField, IconButton, Icon, Tooltip }from '@mui/material';
-import { EventButtonAttend, EventButtonCancel } from '../Authentication/Styles';
+import { EventButtonGreen, EventButtonBlack } from '../Authentication/Styles';
+
 const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDeleteEvent}) => {
   
   const [expanded, setExpanded] = useState(false);
@@ -53,15 +54,15 @@ const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDelete
   const renderButtons = () => {
     if (attending) {
       if (eventHappened) {
-        return <Button size="small" variant="contained" color="error" onClick={handleClickUnattend}>Delete from my events</Button>
+        return <Button size="small" variant="contained" color="error" onClick={handleClickUnattend}>Delete from my list</Button>
       }else{
-        return <EventButtonCancel size="small" variant="contained" color="success" onClick={handleClickUnattend}>Can't go</EventButtonCancel>
+        return <EventButtonBlack size="small" variant="contained" color="success" onClick={handleClickUnattend}>Can't go</EventButtonBlack>
       }
     }else{
       if (eventHappened) {
         return <Button size="small" variant="contained" disabled>Attend</Button>
       }else{
-        return <EventButtonAttend size="small"  onClick={handleClickAttend}>Attend</EventButtonAttend>
+        return <EventButtonGreen size="small"  onClick={handleClickAttend}>Attend</EventButtonGreen>
       }
     }    
   }

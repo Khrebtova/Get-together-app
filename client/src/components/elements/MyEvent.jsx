@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {Card, CardActions, CardContent, Button, Typography, Divider, Collapse, FormControl, TextField, IconButton, Icon, Tooltip }from '@mui/material';
 import {headers } from '../../Globals'
+import { EventButtonGreen} from '../Authentication/Styles';
 
 const MyEvent = ({event, user, onUpdateEvents, onDeleteEvent, onSetSelectedEvent, setEditEvent, today}) => {
   const [expanded, setExpanded] = useState(false);
@@ -61,7 +62,7 @@ const MyEvent = ({event, user, onUpdateEvents, onDeleteEvent, onSetSelectedEvent
   }
   
   return (
-    <Card variant='outlined'  sx={{ width: 400, m: 2}}>
+    <Card variant='outlined'  sx={{ width: {xl: 350, lg: 350, md: 350, sm: 350, xs: 400}, m: 1,  boxShadow: 7 }}>
       <CardContent>
         {eventHappened ? <Typography color="error" gutterBottom> !!This event has already happened</Typography> : null}
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -83,9 +84,9 @@ const MyEvent = ({event, user, onUpdateEvents, onDeleteEvent, onSetSelectedEvent
         </Typography>              
       </CardContent>  
       <CardActions>
-        <Button size="small" variant="contained" color="error" onClick={()=>onDeleteEvent(event.id)}>Delete Event</Button>
-        <Button size="small" variant="contained" color="primary" onClick={handleClickEdit}>Edit Event</Button>
-        <Button size="small" color="secondary" onClick={()=>setExpanded(!expanded)}>{expanded ? 'Show less ↑' : 'Show More ↓'}</Button>
+        <Button size="small" variant="contained" color="error" onClick={()=>onDeleteEvent(event.id)}>Delete</Button>
+        <EventButtonGreen size="small" variant="contained" color="primary" onClick={handleClickEdit}>Edit</EventButtonGreen>
+        <Button size="small" color="success" onClick={()=>setExpanded(!expanded)}>{expanded ? 'Show less ↑' : 'Show More ↓'}</Button>
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
