@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState} from 'react'
 import {UserContext} from '../context/user'
 import Event from '../elements/Event'
-import { Box, Button, Typography, Divider, TextField, Select, MenuItem, InputLabel, FormControl } from '@mui/material'
+import { Box, Stack, Button, Typography, TextField, Select, MenuItem, InputLabel} from '@mui/material'
+import { LoginForm} from '../Authentication/Styles'
 
 const EventBrowser = ({events, today, onUpdateEvents, categories, onSetSelectedEvent}) => {
   const {user} = useContext(UserContext)
@@ -27,29 +28,33 @@ const EventBrowser = ({events, today, onUpdateEvents, categories, onSetSelectedE
   }
 
   return (
-    <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 10, ml: 10, mr: 10}}>      
-      <Box sx={{display: 'flex' , flexDirection: 'row'}}>
-        <Typography variant="h3" m={2}>
-          Event Browser 
-        </Typography>
-        <TextField variant='outlined' label='🔍 Search' value={search} onChange={e => setSearch(e.target.value.toLowerCase())} sx={{m: 2}}/>
-        <FormControl variant="outlined" sx={{ minWidth: 200, m: 2}}>
-          <InputLabel >Select Category</InputLabel>
-          <Select  onChange={(e)=>setCategoryFilter(e.target.value)} value={categoryFilter}>
+    <Stack direction='column' mt='120px' sx={{p: {xs: '0 20px', sm: '0 20px', md: '20px 40px', lg: '20px 40px' }}}>      
+      <Box sx={{display: 'flex', flexDirection: {xs: 'column', sm: 'row'}, justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', mb: '20px'}}>       
+        <LoginForm >
+          <TextField 
+            value={search} 
+            onChange={e => setSearch(e.target.value.toLowerCase())} 
+            variant='outlined' 
+            label='🔍 Search' 
+            color='success' 
+            sx={{backgroundColor: '#F6F6F6'}}
+          />        
+        </LoginForm>
+        <LoginForm >
+          <InputLabel>Filter By Category</InputLabel>
+          <Select  onChange={(e)=>setCategoryFilter(e.target.value)} value={categoryFilter} color='success' >
             <MenuItem value="">Show All</MenuItem>                  
             {categories.map(category => <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>)}
           </Select>
-        </FormControl>        
-        <Button size='large' color="success" sx={{m: 2, height: 55}} onClick={handleResetFilters}> Reset all filters</Button>
-      </Box>
+        </LoginForm>        
+        <Button size='large' color="success" sx={{height: '55px', fontSize: '20px', fontWeight: 'bold', mt: '10px'}} onClick={handleResetFilters}>Reset</Button>
+      </Box> 
       
-      <Divider />
-
-      <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', mb: 1, mt: 5, bgcolor: '#f3c460'}}>
+      <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap'}}>
           {eventList.length > 0 ? displayEvents : <p>Nothing was found, change filters</p>}
       </Box>       
               
-    </Box>
+    </Stack>
   )
 }
 

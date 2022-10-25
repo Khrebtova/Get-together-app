@@ -24,12 +24,12 @@ const Navbar = () => {
       <> 
         <Tooltip title="Browse Events" placement="bottom">       
           <Button color="inherit" size='small' onClick={()=>navigate('/events')}>
-            <SearchIcon sx={{fontSize: {lg: '30px', md: '20px', sm: '20px'}}} /> 
+            <SearchIcon sx={{fontSize: {lg: '30px', md: '30px', sm: '20px'}}} /> 
           </Button>
         </Tooltip>
         <Tooltip title="Create Event" placement="bottom">
           <Button color="inherit" onClick={()=>navigate('/events/new')}>
-            <AddCircleOutlineIcon sx={{fontSize: {lg: '30px', md: '20px', sm: '20px'}}}/> 
+            <AddCircleOutlineIcon sx={{fontSize: {lg: '30px', md: '30px', sm: '20px'}}}/> 
           </Button>
         </Tooltip>  
         <div>
@@ -42,7 +42,16 @@ const Navbar = () => {
               onClick={handleMenu}
               color="inherit"
             >
-              <Avatar sx={{ width: {lg: 50, sm: 30}, height: {lg: 50, sm: 30}, bgcolor: '#F6F6F6', color: '#212121', fontWeight: 900}}>{letter}</Avatar>
+              <Avatar 
+              sx={{ 
+                width: {lg: 50, md: 40, sm: 30, xs: 30}, 
+                height: {lg: 50, md: 40, sm: 30, xs: 30}, 
+                bgcolor: '#F6F6F6', 
+                color: '#212121', 
+                fontWeight: 900}}
+              >
+                  {letter}
+              </Avatar>
             </IconButton>
           </Tooltip>
           <Menu

@@ -28,7 +28,20 @@ export const LoginBox = styled(Box)({
     flexDirection: 'column',
     justifyContent: 'start',
     alignItems: 'center',
-    padding: '40px',
+    padding: '30px 40px',
 
 })
 
+export const EventButtonAttend = styled(Button)({
+    width: '150px',
+    backgroundColor: '#6D9886',
+    color: '#F6F6F6',
+    '&:hover': {backgroundColor: '#83978f'}
+})
+
+export const EventButtonCancel = styled(Button)({
+    width: '150px',
+    backgroundColor: '#212121',
+    color: 'white',
+    '&:hover': {backgroundColor: '#404040'}
+})

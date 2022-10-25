@@ -1,7 +1,7 @@
 import React, { useState} from 'react'
 import {headers } from '../../Globals'
 import {Card, CardActions, CardContent, Button, Typography, Divider, Collapse, FormControl, TextField, IconButton, Icon, Tooltip }from '@mui/material';
-
+import { EventButtonAttend, EventButtonCancel } from '../Authentication/Styles';
 const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDeleteEvent}) => {
   
   const [expanded, setExpanded] = useState(false);
@@ -55,13 +55,13 @@ const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDelete
       if (eventHappened) {
         return <Button size="small" variant="contained" color="error" onClick={handleClickUnattend}>Delete from my events</Button>
       }else{
-        return <Button size="small" variant="contained" color="success" onClick={handleClickUnattend}>Can't go, sorry</Button>
+        return <EventButtonCancel size="small" variant="contained" color="success" onClick={handleClickUnattend}>Can't go</EventButtonCancel>
       }
     }else{
       if (eventHappened) {
-        return <Button size="small" variant="contained" disabled>Attend event</Button>
+        return <Button size="small" variant="contained" disabled>Attend</Button>
       }else{
-        return <Button size="small" variant="contained" color="secondary" onClick={handleClickAttend}>Attend Event</Button>
+        return <EventButtonAttend size="small"  onClick={handleClickAttend}>Attend</EventButtonAttend>
       }
     }    
   }
@@ -108,14 +108,14 @@ const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDelete
   }
   
   return (
-    <Card variant='outlined'  sx={{ width: 400, m: 2}}>
+    <Card variant='outlined' sx={{ width: {xl: 350, lg: 350, md: 300, sm: 300, xs: 400}, m: 1,  boxShadow: 7 }}>
       <CardContent >
       {eventHappened ? <Typography color="error" gutterBottom> !!This event has already happened</Typography> : null}
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {event.category.name} event created by {event.host.username}
         </Typography>        
         <Tooltip title='Click to see details'>
-          <Typography variant="h5" component="div" onClick={()=>onSetSelectedEvent(event)}>
+          <Typography variant="h5" component="div" onClick={()=>onSetSelectedEvent(event)} >
             {event.name}
           </Typography>
         </Tooltip>
@@ -129,10 +129,9 @@ const Event = ({event, user, onUpdateEvents, today, onSetSelectedEvent, onDelete
           {renderCommentCount()}
         </Typography>        
       </CardContent>
-      <CardActions>
-        
+      <CardActions>        
         {renderButtons()}
-        <Button size="small" color="secondary" onClick={()=>setExpanded(!expanded)}>{expanded ? 'Show less ↑' : 'Show More ↓'}</Button>
+        <Button size="small" color="success" onClick={()=>setExpanded(!expanded)}>{expanded ? 'Show less ↑' : 'Show More ↓'}</Button>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

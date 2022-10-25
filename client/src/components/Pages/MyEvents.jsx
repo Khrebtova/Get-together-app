@@ -37,8 +37,8 @@ const MyEvents = ({events, onUpdateEvents, onSetSelectedEvent, onDeleteEvent, se
     />)  
   
   return (
-    <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: 10, ml: 10, mr: 10}}>
-      <Typography variant="h3" >
+    <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: '120px', p: '40px'}}>
+      <Typography variant="h4" >
           My Events
       </Typography>
       <Divider />

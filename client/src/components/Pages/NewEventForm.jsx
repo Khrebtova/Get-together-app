@@ -93,8 +93,7 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
     }
    
     return (   
-        <Box className='homepage'
-            mt='120px'            
+        <Box className='newEvent'                 
             sx={{
                 display: 'flex', 
                 flexDirection: 'column', 
