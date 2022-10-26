@@ -38,8 +38,7 @@ const MyEvents = ({events, onUpdateEvents, onSetSelectedEvent, onDeleteEvent, se
     />)  
   
   return (
-    <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: '120px', p: '40px'}}>
-      
+    <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', mb: 1, mt: '120px', p: '40px'}}>      
       <Stack direction="row" justifyContent='center' spacing={2} sx={{mb: 2}}>
         <Fab 
           onClick={()=>setDisplayHostingEvents(true)} 

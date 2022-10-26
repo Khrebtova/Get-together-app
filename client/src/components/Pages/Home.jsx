@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState} from 'react'
 import {UserContext} from '../context/user'
 import { Box, Typography, Divider, Paper, Button} from '@mui/material'
-import IMG from '../../assets/food-narrow.jpg'
-
 
 const Home = ({onSetSelectedEvent, events, today}) => {
   const {user} = useContext(UserContext) 
@@ -45,13 +43,7 @@ const Home = ({onSetSelectedEvent, events, today}) => {
     }     
 
   return (        
-      <Box className='homepage'>
-        {/* <Typography variant="h4" fontWeight='bold' textTransform='capitalize'>
-          Welcome, {user.username}!
-        </Typography>
-        <Divider sx={{color: '#6D9886', height: '15px'}} /> */}
-        {/* <img src={IMG} alt="food" className='homepage-img'/> */}
-        {/* <Box sx={{display: 'flex', flexDirection: {lg: 'row', md: 'column', sm: 'column', xs: 'column'}, justifyContent: 'center'}}> */}
+      <Box className='homepage'>      
         <Box sx={{display: 'grid', gridTemplateColumns: {lg: '1fr 1fr 1fr', md: '1fr 1fr 1fr', sm: '1fr'}, justifyContent: 'center'}}>
           <Paper elevation={10}  sx={{ mt: 5, mr: 2, ml: 2}}>
             <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', flexWrap: 'wrap', m: 2}}>
@@ -80,7 +72,8 @@ const Home = ({onSetSelectedEvent, events, today}) => {
               </ul>   
             </Box>
           </Paper>
-          </Box>      
+          </Box>
+          <p className='photo-reference'>Photo by <a href="https://unsplash.com/@spencerdavis?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Spencer Davis</a> on <a href="https://unsplash.com/s/photos/friends?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>      
       </Box>
     
   )

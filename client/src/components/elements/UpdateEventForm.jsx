@@ -1,15 +1,9 @@
 import React , { useState } from 'react'
 import { headers } from '../../Globals'
-import { styled } from '@mui/material/styles';
 import {Box, TextField, Button, Select, MenuItem, FormControl, Typography} from '@mui/material'
+import {NewEventFormControl} from '../Styles'
 
-const NewEventFormControl = styled(FormControl)({    
-    minWidth: 100, 
-    marginRight: 100, 
-    marginLeft: 100, 
-    marginTop: 2, 
-    backgroundColor: 'white' 
-})
+
 
 const UpdateEventForm = ({event, categories, onUpdateEvents, onSetSelectedEvent, setEditEvent, onAddCategory}) => {
     const [errors, setErrors] = useState([]);
@@ -83,7 +77,7 @@ const UpdateEventForm = ({event, categories, onUpdateEvents, onSetSelectedEvent,
 
 
   return (
-    <Box sx={{width: '100%', display: 'flex', position: 'fixed', zIndex: 'modal', flexDirection: 'column', bgcolor: '#dddedf'}}>
+    <Box sx={{width: '100%', display: 'flex', position: 'fixed', zIndex: 'modal', flexDirection: 'column', alignItems: 'center', bgcolor: '#212121'}}>
         <NewEventFormControl sx={{mt: 4}}>                      
             <TextField variant='outlined' size="small" name='name' value={editedEvent.name} onChange={handleChange} placeholder="Name"/>
         </NewEventFormControl>

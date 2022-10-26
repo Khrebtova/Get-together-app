@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import {UserContext} from '../context/user'
 import { Box, Typography, Stack } from '@mui/material'
 import IMG from '../../assets/hike-horisontal.jpg'
-import { LoginButton, LoginBox, LogoutButton} from './Styles'
+import { LoginButton, LoginBox, LogoutButton} from '../Styles'
 
 const Logout = ({onSetSelectedEvent}) => {
     const {user, setUser} = useContext(UserContext)

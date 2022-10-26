@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Card, CardActions, CardContent, Button, Typography, Divider, Collapse, FormControl, TextField, IconButton, Icon, Tooltip }from '@mui/material';
 import {headers } from '../../Globals'
-import { EventButtonGreen} from '../Authentication/Styles';
+import { EventButtonGreen } from '../Styles';
 
 const MyEvent = ({event, user, onUpdateEvents, onDeleteEvent, onSetSelectedEvent, setEditEvent, today}) => {
   const [expanded, setExpanded] = useState(false);
@@ -12,7 +12,7 @@ const MyEvent = ({event, user, onUpdateEvents, onDeleteEvent, onSetSelectedEvent
   
   const renderGuestList =() => {
     if (event.guests.length === 0) return <p>No one is attending</p>
-    return event.guests.map(guest => <Typography component='li' key={guest.id}>{guest.username}</Typography>)
+    return event.guests.map(guest => <Typography variant="body2" component='li' key={guest.id}>{guest.username}</Typography>)
   }
 
   const handleSubmitComment = (e) => {
@@ -46,7 +46,7 @@ const MyEvent = ({event, user, onUpdateEvents, onDeleteEvent, onSetSelectedEvent
   const renderComments = () => {
     if (commentList.length > 0) {
       return commentList.map(comment => (
-        <Typography key={comment.id} component='li'>
+        <Typography key={comment.id} component='li' variant="body2">
           {comment.author}: {comment.text}
           {comment.author === user.username ? <IconButton onClick={()=> handleDeleteComment(comment.id)}><Icon color='error' fontSize="small">delete</Icon></IconButton> : null}
         </Typography>
@@ -62,7 +62,17 @@ const MyEvent = ({event, user, onUpdateEvents, onDeleteEvent, onSetSelectedEvent
   }
   
   return (
-    <Card variant='outlined'  sx={{ width: {xl: 350, lg: 350, md: 350, sm: 350, xs: 400}, m: 1,  boxShadow: 7 }}>
+    <Card 
+      variant='outlined'  
+      sx={{ 
+        width: {xl: 350, lg: 350, md: 350, sm: 350, xs: 400}, 
+        m: 1,  
+        boxShadow: 7, 
+        display: 'flex', 
+        flexDirection: 'column', 
+        justifyContent: 'space-between' 
+      }}
+    >
       <CardContent>
         {eventHappened ? <Typography color="error" gutterBottom> !!This event has already happened</Typography> : null}
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -83,22 +93,22 @@ const MyEvent = ({event, user, onUpdateEvents, onDeleteEvent, onSetSelectedEvent
           Comments: {event.comments.length}
         </Typography>              
       </CardContent>  
-      <CardActions>
+      <CardActions >
         <Button size="small" variant="contained" color="error" onClick={()=>onDeleteEvent(event.id)}>Delete</Button>
         <EventButtonGreen size="small" variant="contained" color="primary" onClick={handleClickEdit}>Edit</EventButtonGreen>
         <Button size="small" color="success" onClick={()=>setExpanded(!expanded)}>{expanded ? 'Show less ↑' : 'Show More ↓'}</Button>
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
-          <Typography paragraph>Details:</Typography>
+          <Typography >Details:</Typography>
           <Typography paragraph variant="body2" color="text.secondary">
             {event.description}
           </Typography>
-          <Typography paragraph>Who is going:</Typography>
-          <Typography variant="body2" color="text.secondary" component="ul">
+          <Typography >Who is going:</Typography>
+          <Typography paragraph variant="body2" color="text.secondary" component="ul">
             {renderGuestList()}
           </Typography>
-          <Typography paragraph>Comments:</Typography>
+          <Typography >Comments:</Typography>
           <Typography variant="body2" color="text.secondary" component="ul">
             {renderComments()}
           </Typography>

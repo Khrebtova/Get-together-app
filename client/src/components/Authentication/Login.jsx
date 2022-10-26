@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { headers } from '../../Globals'
 import { Box, TextField, Typography, Stack } from '@mui/material'
 import IMG from '../../assets/ocean-square.jpg'
-import { LoginButton, LoginForm, LoginBox } from './Styles'
+import { LoginButton, LoginForm, LoginBox } from '../Styles'
 
 
 const Login = () => {

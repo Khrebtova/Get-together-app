@@ -2,17 +2,8 @@ import React, { useState, useContext, useEffect } from 'react'
 import { headers } from '../../Globals'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../context/user'
-import { styled } from '@mui/material/styles';
-import { Box, TextField, Button, Select, MenuItem, FormControl, InputLabel, Typography, Divider } from '@mui/material'
-import { LoginBox , LoginForm, LoginButton, TextInput } from '../Authentication/Styles';
-
-const NewEventFormControl = styled(FormControl)({    
-    minWidth: 100, 
-    marginRight: 20, 
-    marginLeft: 20, 
-    marginTop: 20, 
-    backgroundColor: 'white' 
-})
+import { Box, TextField, Select, MenuItem, InputLabel, Typography, Divider } from '@mui/material'
+import { LoginBox , LoginForm, LoginButton } from '../Styles';
 
 const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent}) => {
     const {user} = useContext(UserContext)
@@ -100,7 +91,7 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
                 justifyContent: 'center',
                 alignItems: 'center'
             }} 
-        >        
+        > 
             <LoginBox bgcolor='#D9CAB3'>
                 <Typography variant="h4" fontWeight='bold' mb='10px'>
                     Create New Event 
@@ -130,8 +121,8 @@ const NewEventForm = ({categories, onAddEvent, onAddCategory, onSetSelectedEvent
                 <LoginForm sx={{ minWidth: 100, mt: 4 }}>
                     <LoginButton type="submit" variant="contained" onClick={handleSubmit} >{isLoading ? 'Loading...' : 'Save Event'}</LoginButton>
                 </LoginForm>
-            </LoginBox>
-            {errors ? errors.map(error => <Typography key={error} variant="body1" color="error">{error}</Typography>) : null}
+                {errors ? errors.map(error => <Typography key={error} variant="body2" color="error">{error}</Typography>) : null}
+            </LoginBox>           
         </Box>
     )
 }

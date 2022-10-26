@@ -1,8 +1,7 @@
 import React, { useState, useContext }  from 'react'
 import {UserContext} from '../context/user'
 import { headers } from '../../Globals'
-import {Box, Card, CardActions, CardContent, Button, Typography, Divider, FormControl, TextField, IconButton, Icon} from '@mui/material';
-
+import {Box, Card, CardActions, CardContent, Button, Typography, Divider, FormControl, TextField, IconButton, Icon, CardHeader} from '@mui/material';
 
 const EventPage = ({event, today, onSetSelectedEvent, onUpdateEvents, onDeleteEvent, setEditEvent}) => {
   const [comment, setComment] = useState('')
@@ -95,15 +94,15 @@ const EventPage = ({event, today, onSetSelectedEvent, onUpdateEvents, onDeleteEv
   const renderGuestButtons = () => {
     if (isAttending) {
       if (eventHappened) {
-        return <Button size="small" variant="contained" color="error" onClick={handleClickUnattend}>Delete from my events</Button>
+        return <Button size="small" variant="contained" color="error" onClick={handleClickUnattend}>Delete from my list</Button>
       }else{
-        return <Button size="small" variant="contained" color="success" onClick={handleClickUnattend}>Can't go, sorry</Button>
+        return <Button size="small" variant="contained" color="success" onClick={handleClickUnattend}>Can't go</Button>
       }
     }else{
       if (eventHappened) {
         return <Button size="small" variant="contained" disabled>Attend event</Button>
       }else{
-        return <Button size="small" variant="contained" color="secondary" onClick={handleClickAttend}>Attend Event</Button>
+        return <Button size="small" variant="contained" color="success" onClick={handleClickAttend}>Attend</Button>
       }
     }    
   }
@@ -111,35 +110,35 @@ const EventPage = ({event, today, onSetSelectedEvent, onUpdateEvents, onDeleteEv
   const renderHostButtons = () => {
     return(
       <div>
-        <Button size="small" variant="contained" color="error" onClick={handleClickDelete}>Delete Event</Button>
-        <Button size="small" variant="contained" color="primary" onClick={()=> setEditEvent(true)}>Edit Event</Button>
+        <Button size="small" variant="contained" color="error" onClick={handleClickDelete}><Icon color='white' fontSize="small">delete</Icon> Delete</Button>
+        <Button size="small" variant="contained" color="success" onClick={()=> setEditEvent(true)}><Icon color='white' fontSize="small">edit</Icon>Edit</Button>
       </div>
     )}
   
   return (
-    <Box sx={{width: '100%', display: 'flex', position: 'fixed', zIndex: 'modal', flexDirection: 'column', bgcolor: '#dddedf'}}>
-      <Card variant='outlined'  sx={{ m: 2}}>
-      <CardContent>
-      {eventHappened ? <Typography color="error" gutterBottom> !!This event has already happened</Typography> : null}
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {event.category.name} event created by {event.host.username}
-        </Typography>        
-        <Typography variant="h5" component="div">
-          {event.name}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {event.date}
-        </Typography>
-        <Divider />        
-        <Typography paragraph>Details:</Typography>
+    <Box sx={{width: '100%', display: 'flex', position: 'fixed', zIndex: 'modal', flexDirection: 'column', bgcolor: '#212121'}}>
+      <Card variant='outlined'  sx={{m: 2}}>                   
+        <CardHeader 
+          title={event.name}
+          subheader={event.date} 
+          action={<IconButton onClick={()=> onSetSelectedEvent(null)}><Icon color='error' fontSize="small">close</Icon></IconButton>}
+        />        
+        <CardContent>
+          {eventHappened ? <Typography color="error" gutterBottom> !!This event has already happened</Typography> : null}  
+          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            {event.category.name} event created by {event.host.username}
+          </Typography>          
+
+          <Divider />        
+          <Typography >Details:</Typography>
           <Typography paragraph variant="body2" color="text.secondary">
             {event.description}
           </Typography>
-          <Typography paragraph>Who is going:</Typography>
-          <Typography variant="body2" color="text.secondary" component="ul">
+          <Typography >Who is going:</Typography>
+          <Typography variant="body2" color="text.secondary" component="ul" paragraph>
             {renderGuestList()}
           </Typography>
-          <Typography paragraph>Comments:</Typography>
+          <Typography >Comments:</Typography>
           <Typography variant="body2" color="text.secondary" component="ul">
             {renderComments()}
           </Typography>
@@ -151,11 +150,11 @@ const EventPage = ({event, today, onSetSelectedEvent, onUpdateEvents, onDeleteEv
               <Icon sx={{ color: 'green', mt: 1 }}>add_circle</Icon>
             </IconButton>
           </FormControl>
-      </CardContent>
-      <CardActions sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-        {isHost ? renderHostButtons() : renderGuestButtons()}     
-        <Button variant="contained" color="error" mb={2} mt={2} onClick={()=>onSetSelectedEvent(null)}> CLOSE </Button>
-      </CardActions>
+        </CardContent>
+        <CardActions sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+          {isHost ? renderHostButtons() : renderGuestButtons()}     
+          {/* <Button size='small' sx={{width: '30px', color: '#212121', fontWeight: '700'}} mb={2} mt={2} onClick={()=>onSetSelectedEvent(null)}>X</Button> */}
+        </CardActions>
       </Card>
        
     </Box>

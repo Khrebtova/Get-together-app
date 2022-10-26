@@ -4,7 +4,7 @@ import { headers } from '../../Globals'
 import {UserContext} from '../context/user'
 import { Box, TextField, Typography, Stack } from '@mui/material'
 import IMG from '../../assets/sunset-square.jpg'
-import { LoginButton, LoginForm, LoginBox, InputField } from './Styles'
+import { LoginButton, LoginForm, LoginBox} from '../Styles'
 
 const Signup = () => {
   const {user, setUser} = useContext(UserContext)

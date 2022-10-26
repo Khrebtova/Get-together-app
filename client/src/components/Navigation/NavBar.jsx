@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import {useNavigate, Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import {UserContext} from '../context/user'
 import {AppBar, Typography, Button, Divider, MenuItem, Menu, Avatar, Tooltip, IconButton, Stack} from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -23,18 +23,19 @@ const Navbar = () => {
     return(
       <> 
         <Tooltip title="Browse Events" placement="bottom">       
-          <Button color="inherit" size='small' onClick={()=>navigate('/events')}>
+          <Button color="inherit" size='small' onClick={()=>navigate('/events')}  className='navbarButton'>
             <SearchIcon sx={{fontSize: {lg: '30px', md: '30px', sm: '20px'}}} /> 
           </Button>
         </Tooltip>
         <Tooltip title="Create Event" placement="bottom">
-          <Button color="inherit" onClick={()=>navigate('/events/new')}>
+          <Button color="inherit" onClick={()=>navigate('/events/new')} className='navbarButton'>
             <AddCircleOutlineIcon sx={{fontSize: {lg: '30px', md: '30px', sm: '20px'}}}/> 
           </Button>
         </Tooltip>  
         <div>
           <Tooltip title="menu">
-            <IconButton              
+            <IconButton 
+              className='navbarButton'             
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
@@ -92,13 +93,13 @@ const Navbar = () => {
   return (      
       <AppBar position="fixed" sx={{background: '#6D9886', height: '120px', p: {lg: '20px 40px', md: '40px', sm: '30px 40px', xs: '20px'}}}>
         <Stack direction='row' alignItems='center'  >           
-          <Typography                         
-            sx={{ 
-            flexGrow: 1,
-            fontSize: {lg: '40px', md: '40px', sm: '30px', xs: '20px'}, 
-            fontWeight: 700, 
-            letterSpacing: '.3rem', 
-            color: 'inherit'
+          <Typography className='logo'     
+            sx={{                
+              flexGrow: 1,
+              fontSize: {lg: '40px', md: '40px', sm: '30px', xs: '20px'}, 
+              fontWeight: 700, 
+              letterSpacing: '.3rem', 
+              color: 'inherit'
             }} 
             onClick={()=>navigate('/')}
           >
